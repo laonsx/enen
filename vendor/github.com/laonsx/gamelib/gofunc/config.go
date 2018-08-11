@@ -5,16 +5,18 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sync"
 )
 
 func init() {
 
-	AppPath, _ = filepath.Abs(filepath.Dir(os.Args[0]))
-	AppPath = AppPath + string(os.PathSeparator)
-	AppPath = filepath.Join(AppPath + "..")
+	appPath, _ = filepath.Abs(filepath.Dir(os.Args[0]))
+	appPath = appPath + string(os.PathSeparator)
+	appPath = filepath.Join(appPath + "..")
+
 }
 
-var AppPath string
+var appPath string
 
 const (
 	CONFIGS = "configs"
@@ -26,13 +28,19 @@ const (
 //name: 文件名
 func LoadJsonConf(model, name string, v interface{}) {
 
-	fileName := filepath.Join(AppPath, model, name+".json")
+	fileName := filepath.Join(appPath, model, name+".json")
 
 	err := loadJsonFile(fileName, v)
 	if err != nil {
 
 		panic(err)
 	}
+}
+
+//GetAppPath 获取应用路径
+func GetAppPath() string {
+
+	return appPath
 }
 
 func loadJsonFile(file string, v interface{}) error {
@@ -46,4 +54,35 @@ func loadJsonFile(file string, v interface{}) error {
 	err = json.Unmarshal(buf, v)
 
 	return err
+}
+
+// GameConf 游戏策划配置
+type GameConf struct {
+	mux  sync.RWMutex
+	data map[string]interface{}
+}
+
+// NewGameConf 初始化
+func NewGameConf() *GameConf {
+	gameConf := new(GameConf)
+	gameConf.data = make(map[string]interface{})
+	return gameConf
+}
+
+// GetConf 数据
+func (gameConf *GameConf) GetConf(key string) interface{} {
+
+	gameConf.mux.RLock()
+	defer gameConf.mux.RUnlock()
+
+	return gameConf.data[key]
+}
+
+// SetConf 数据
+func (gameConf *GameConf) SetConf(key string, v interface{}) {
+
+	gameConf.mux.Lock()
+	defer gameConf.mux.Unlock()
+
+	gameConf.data[key] = v
 }

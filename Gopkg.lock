@@ -47,7 +47,7 @@
     "gofunc",
     "redis"
   ]
-  revision = "b0ea05e1b88c7a32704d24b19e1bd426d20854a4"
+  revision = "65e2d93b1e9d475101e94fe5a2109d09d1cd2a84"
 
 [[projects]]
   name = "github.com/magiconair/properties"
