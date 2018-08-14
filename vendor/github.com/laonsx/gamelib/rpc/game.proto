@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package rpc;
+
+service Game {
+
+    rpc Stream(stream GameMsg) returns (stream GameMsg) {}
+
+    rpc Call(GameMsg) returns (GameMsg) {}
+}
+
+message GameMsg {
+    string ServiceName = 1;
+    bytes Msg = 2;
+    Session Session = 3;
+}
+
+message Session {
+    uint64 Uid = 1;
+}

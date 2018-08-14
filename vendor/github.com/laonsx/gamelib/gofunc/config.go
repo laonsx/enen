@@ -12,8 +12,6 @@ func init() {
 
 	appPath, _ = filepath.Abs(filepath.Dir(os.Args[0]))
 	appPath = appPath + string(os.PathSeparator)
-	appPath = filepath.Join(appPath + "..")
-
 }
 
 var appPath string
@@ -41,6 +39,12 @@ func LoadJsonConf(model, name string, v interface{}) {
 func GetAppPath() string {
 
 	return appPath
+}
+
+//SetAppPath 设置应用路径
+func SetAppPath(path string) {
+
+	appPath = path
 }
 
 func loadJsonFile(file string, v interface{}) error {

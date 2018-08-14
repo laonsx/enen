@@ -17,7 +17,10 @@ package cmd
 import (
 	"fmt"
 
+	"enen/gate"
+
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // gateCmd represents the gate command
@@ -26,7 +29,10 @@ var gateCmd = &cobra.Command{
 	Short: "代理服务",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		fmt.Println("gate called")
+
+		gate.Run()
 	},
 }
 
@@ -42,4 +48,8 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// gateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	gateCmd.Flags().StringP("name", "n", "game", "服务名称")
+
+	viper.BindPFlag("gate.name", gateCmd.Flags().Lookup("name"))
 }

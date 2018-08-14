@@ -17,7 +17,10 @@ package cmd
 import (
 	"fmt"
 
+	"enen/center"
+
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // centerCmd represents the center command
@@ -26,7 +29,10 @@ var centerCmd = &cobra.Command{
 	Short: "中心服务",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		fmt.Println("center called")
+
+		center.Run()
 	},
 }
 
@@ -42,4 +48,8 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// centerCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	centerCmd.Flags().StringP("name", "n", "game", "服务名称")
+
+	viper.BindPFlag("center.name", centerCmd.Flags().Lookup("name"))
 }

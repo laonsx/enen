@@ -17,7 +17,10 @@ package cmd
 import (
 	"fmt"
 
+	"enen/game"
+
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // gameCmd represents the game command
@@ -27,6 +30,8 @@ var gameCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("game called")
+
+		game.Run()
 	},
 }
 
@@ -42,4 +47,14 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// gameCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	//gameCmd.Flags().StringP("rpcaddr", "r", "127.0.0.1:6003", "rpc服务地址")
+	//gameCmd.Flags().StringP("logdir", "l", "./log", "log存放路径")
+	gameCmd.Flags().StringP("name", "n", "game", "服务名称")
+	//gameCmd.Flags().StringP("path", "p", "", "应用路径")
+
+	//viper.BindPFlag("game.rpcaddr", gameCmd.Flags().Lookup("rpcaddr"))
+	//viper.BindPFlag("game.logdir", gameCmd.Flags().Lookup("logdir"))
+	viper.BindPFlag("game.name", gameCmd.Flags().Lookup("name"))
+	//viper.BindPFlag("game.path", gameCmd.Flags().Lookup("path"))
 }

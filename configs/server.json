@@ -1,0 +1,33 @@
+{
+  "service_example":{
+    "http_addr":"",
+    "web_socket_addr":"",
+    "rpc_addr":"",
+    "nsq_addr":"",
+    "nsq_topic":"",
+    "log_dir":"",
+    "origin_allow":""
+  },
+  "auth":{
+    "http_addr":"0.0.0.0:7001",
+    "log_dir":"./"
+  },
+  "center":{
+    "http_addr":"0.0.0.0:7002",
+    "rpc_addr":"127.0.0.1:9002",
+    "log_dir":"./"
+  },
+  "gate":{
+    "web_socket_addr":"0.0.0.0:8003",
+    "rpc_addr":"127.0.0.1:9003",
+    "log_dir":"./"
+  },
+  "game":{
+    "rpc_addr":"127.0.0.1:9004",
+    "log_dir":"./"
+  },
+  "gmt":{
+    "http_addr":"0.0.0.0:7005",
+    "log_dir":"./"
+  }
+}

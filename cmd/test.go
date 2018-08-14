@@ -17,7 +17,10 @@ package cmd
 import (
 	"fmt"
 
+	"enen/test"
+
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // testCmd represents the test command
@@ -26,7 +29,10 @@ var testCmd = &cobra.Command{
 	Short: "脚本",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		fmt.Println("test called")
+
+		test.Run()
 	},
 }
 
@@ -42,4 +48,8 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// testCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	testCmd.Flags().StringP("func", "f", "", "执行模块")
+
+	viper.BindPFlag("auth.func", testCmd.Flags().Lookup("func"))
 }

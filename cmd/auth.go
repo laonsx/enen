@@ -17,7 +17,10 @@ package cmd
 import (
 	"fmt"
 
+	"enen/auth"
+
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // authCmd represents the auth command
@@ -26,7 +29,10 @@ var authCmd = &cobra.Command{
 	Short: "登录服务",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		fmt.Println("auth called")
+
+		auth.Run()
 	},
 }
 
@@ -42,4 +48,8 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// authCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	authCmd.Flags().StringP("name", "n", "game", "服务名称")
+
+	viper.BindPFlag("auth.name", authCmd.Flags().Lookup("name"))
 }
