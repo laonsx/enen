@@ -49,7 +49,7 @@ func init() {
 	// is called directly, e.g.:
 	// authCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
-	authCmd.Flags().StringP("name", "n", "game", "服务名称")
+	authCmd.Flags().StringP("name", "n", "auth", "服务名称")
 
 	viper.BindPFlag("auth.name", authCmd.Flags().Lookup("name"))
 }

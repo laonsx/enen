@@ -49,7 +49,7 @@ func init() {
 	// is called directly, e.g.:
 	// gateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
-	gateCmd.Flags().StringP("name", "n", "game", "服务名称")
+	gateCmd.Flags().StringP("name", "n", "gate", "服务名称")
 
 	viper.BindPFlag("gate.name", gateCmd.Flags().Lookup("name"))
 }
