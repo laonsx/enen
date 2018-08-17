@@ -10,24 +10,24 @@
   },
   "auth":{
     "http_addr":"0.0.0.0:7001",
-    "log_dir":"./"
+    "log_dir":"./logs/auth.log"
   },
   "center":{
     "http_addr":"0.0.0.0:7002",
     "rpc_addr":"127.0.0.1:9002",
-    "log_dir":"./"
+    "log_dir":"./logs/%s.log"
   },
   "gate":{
     "web_socket_addr":"0.0.0.0:8003",
     "rpc_addr":"127.0.0.1:9003",
-    "log_dir":"./"
+    "log_dir":"./logs/%s.log"
   },
   "game":{
     "rpc_addr":"127.0.0.1:9004",
-    "log_dir":"./"
+    "log_dir":"./logs/%s.log"
   },
   "gmt":{
     "http_addr":"0.0.0.0:7005",
-    "log_dir":"./"
+    "log_dir":"./logs/%s.log"
   }
 }
