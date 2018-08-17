@@ -89,8 +89,8 @@ func auth(conn server.Conn) (a *agent, err error) {
 		return
 	}
 
-	secret := req.Secret
-	uid := req.Uid
+	secret := req.GetSecret()
+	uid := req.GetUid()
 
 	a = agentService.getAgent(uid)
 	if a == nil {

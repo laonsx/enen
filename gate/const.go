@@ -1,6 +1,6 @@
 package gate
 
-var (
+const (
 	PNUM_PING   uint16 = 1
 	PNUM_AUTH   uint16 = 3
 	PNUM_RECONN uint16 = 5

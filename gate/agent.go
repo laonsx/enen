@@ -21,6 +21,7 @@ func init() {
 	agentService = new(agentServiceStruct)
 	agentService.agents = make(map[uint64]*agent)
 
+	//todo
 	//timer.AfterFunc(time.Duration(300)*time.Second, 0, func(n int) {
 	//	agentService.clear()
 	//})
@@ -113,6 +114,8 @@ func (as *agentServiceStruct) agentCount() int {
 
 	return len(as.agents)
 }
+
+//todo agent.stream 对不同node支持，map[name]rpc.Game_StreamClient
 
 type agent struct {
 	mux         sync.RWMutex
