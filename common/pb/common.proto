@@ -3,7 +3,8 @@ syntax = "proto3";
 package pb;
 
 //登录认证 协议号3  重连 5
-message AuthRequest {
+message GateRequest {
 	string secret = 1;
 	uint64 uid = 2;
+	string chanId = 3;
 }

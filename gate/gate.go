@@ -82,7 +82,7 @@ func auth(conn server.Conn) (a *agent, err error) {
 		return
 	}
 
-	req := new(pb.AuthRequest)
+	req := new(pb.GateRequest)
 	err = proto.Unmarshal(body, req)
 	if err != nil {
 
