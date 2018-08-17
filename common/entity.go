@@ -4,7 +4,7 @@ type MySQLConf struct {
 	Name   string `json:"name"`
 	User   string `json:"user"`
 	Dbname string `json:"dbname"`
-	Addr   string `json:"Addr"`
+	Addr   string `json:"addr"`
 }
 
 //rpc config entity
