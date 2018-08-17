@@ -9,7 +9,7 @@ func init() {
 
 type TestService struct{}
 
-func (testService *TestService) Hello(data []byte, session *rpc.Session) ([]byte, error) {
+func (testService *TestService) Hello(data []byte, session *rpc.Session) []byte {
 
-	return nil, nil
+	return nil
 }

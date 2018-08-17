@@ -13,6 +13,7 @@ import (
 	"github.com/laonsx/gamelib/codec"
 	"github.com/laonsx/gamelib/g"
 	"github.com/laonsx/gamelib/gofunc"
+	"github.com/laonsx/gamelib/log"
 	"github.com/laonsx/gamelib/redis"
 	"github.com/laonsx/gamelib/rpc"
 	"github.com/spf13/viper"
@@ -29,6 +30,8 @@ func Run() {
 
 		panic(fmt.Sprintf("server name(%s) not found", viper.GetString("game.name")))
 	}
+
+	log.InitLogrus(fmt.Sprintf(conf.LogDir, viper.GetString("game.name")), viper.GetBool("game.debug"))
 
 	//redis
 	var redisConf []*redis.RedisConf
