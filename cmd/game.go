@@ -52,9 +52,11 @@ func init() {
 	//gameCmd.Flags().StringP("logdir", "l", "./log", "log存放路径")
 	gameCmd.Flags().StringP("name", "n", "game", "服务名称")
 	//gameCmd.Flags().StringP("path", "p", "", "应用路径")
+	gameCmd.Flags().BoolP("debug", "d", true, "调试模式")
 
 	//viper.BindPFlag("game.rpcaddr", gameCmd.Flags().Lookup("rpcaddr"))
 	//viper.BindPFlag("game.logdir", gameCmd.Flags().Lookup("logdir"))
 	viper.BindPFlag("game.name", gameCmd.Flags().Lookup("name"))
 	//viper.BindPFlag("game.path", gameCmd.Flags().Lookup("path"))
+	viper.BindPFlag("game.debug", gameCmd.Flags().Lookup("debug"))
 }

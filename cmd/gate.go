@@ -50,6 +50,8 @@ func init() {
 	// gateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	gateCmd.Flags().StringP("name", "n", "gate", "服务名称")
+	gateCmd.Flags().BoolP("debug", "d", true, "调试模式")
 
 	viper.BindPFlag("gate.name", gateCmd.Flags().Lookup("name"))
+	viper.BindPFlag("gate.debug", gateCmd.Flags().Lookup("debug"))
 }

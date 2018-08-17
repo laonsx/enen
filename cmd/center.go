@@ -50,6 +50,8 @@ func init() {
 	// centerCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	centerCmd.Flags().StringP("name", "n", "center", "服务名称")
+	centerCmd.Flags().BoolP("debug", "d", true, "调试模式")
 
 	viper.BindPFlag("center.name", centerCmd.Flags().Lookup("name"))
+	viper.BindPFlag("center.debug", centerCmd.Flags().Lookup("debug"))
 }

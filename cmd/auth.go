@@ -50,6 +50,8 @@ func init() {
 	// authCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	authCmd.Flags().StringP("name", "n", "auth", "服务名称")
+	authCmd.Flags().BoolP("debug", "d", true, "调试模式")
 
 	viper.BindPFlag("auth.name", authCmd.Flags().Lookup("name"))
+	viper.BindPFlag("auth.debug", authCmd.Flags().Lookup("debug"))
 }
