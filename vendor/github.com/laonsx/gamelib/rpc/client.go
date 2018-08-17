@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"sync"
@@ -13,9 +14,9 @@ import (
 )
 
 var (
-	callTimeout  = 5 * time.Second
-	client       *Client
-	streamClient = make(map[string]Game_StreamClient)
+	callTimeout = 5 * time.Second
+	client      *Client
+	//streamClient = make(map[string]Game_StreamClient)
 )
 
 // InitClient 初始化客户端
@@ -74,7 +75,7 @@ func GetName(pnum uint16) (nname string, sname string, err error) {
 		sname = arr[1]
 	} else {
 
-		err = errors.New("service not found")
+		err = errors.New(fmt.Sprintf("service not found by pnum(%d)", pnum))
 	}
 
 	return
@@ -88,7 +89,7 @@ func GetPNum(service string) (pnum uint16, err error) {
 		pnum = n
 	} else {
 
-		err = errors.New("pnum not found")
+		err = errors.New(fmt.Sprintf("pnum not found by service(%s)", service))
 	}
 
 	return
@@ -116,34 +117,34 @@ func Stream(node string, md map[string]string) (Game_StreamClient, error) {
 	return stream, err
 }
 
-func StreamCall(node string, service string, data []byte, session *Session) ([]byte, error) {
-
-	stream, ok := streamClient[node]
-	if !ok {
-
-		stream, err := Stream(node, nil)
-		if err != nil {
-
-			return nil, err
-		}
-
-		streamClient[node] = stream
-	}
-
-	err := stream.Send(&GameMsg{ServiceName: service, Msg: data, Session: session})
-	if err != nil {
-
-		return nil, err
-	}
-
-	ret, err := stream.Recv()
-	if err != nil {
-
-		return nil, err
-	}
-
-	return ret.Msg, err
-}
+//func StreamCall(node string, service string, data []byte, session *Session) ([]byte, error) {
+//
+//	stream, ok := streamClient[node]
+//	if !ok {
+//
+//		stream, err := Stream(node, nil)
+//		if err != nil {
+//
+//			return nil, err
+//		}
+//
+//		streamClient[node] = stream
+//	}
+//
+//	err := stream.Send(&GameMsg{ServiceName: service, Msg: data, Session: session})
+//	if err != nil {
+//
+//		return nil, err
+//	}
+//
+//	ret, err := stream.Recv()
+//	if err != nil {
+//
+//		return nil, err
+//	}
+//
+//	return ret.Msg, err
+//}
 
 // Call 简单的grpc调用
 func Call(node string, service string, data []byte, session *Session) ([]byte, error) {

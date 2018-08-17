@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"gamelib/g"
+	"github.com/laonsx/gamelib/g"
 )
 
 //RegisterQueueHandler 注册一个队列处理方法

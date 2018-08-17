@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"net"
@@ -9,8 +10,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-
-	"gamelib/gofunc"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -29,7 +28,7 @@ const SESSIONUID = "uid"
 
 // Server 对象
 type Server struct {
-	Name string
+	name string
 
 	listener   net.Listener
 	opts       []grpc.ServerOption
@@ -41,7 +40,7 @@ type Server struct {
 // NewServer 创建Server对象
 func NewServer(name string, lis net.Listener, opts []grpc.ServerOption) *Server {
 
-	server.Name = name
+	server.name = name
 	server.listener = lis
 	server.opts = opts
 	return server
@@ -55,14 +54,14 @@ func (s *Server) Start() {
 
 	RegisterGameServer(grpcServer, s)
 
-	log.Printf("%s rpcserver listening on %s", s.Name, s.listener.Addr().String())
+	log.Printf("rpcserver(%s) listening on %s", s.name, s.listener.Addr().String())
 	grpcServer.Serve(s.listener)
 }
 
 // Stop 停止rpc服务
 func (s *Server) Close() {
 
-	log.Printf("rpcserver closing")
+	log.Printf("rpcserver(%s) closing", s.name)
 	s.grpcServer.Stop()
 }
 
@@ -79,6 +78,10 @@ func (s *Server) Call(ctx context.Context, in *GameMsg) (*GameMsg, error) {
 	}
 
 	resp, err := serv.handle(mname, in)
+	if err != nil {
+
+		err = errors.New(fmt.Sprintf("rpcserver(%s) handle %v", s.name, err))
+	}
 
 	return resp, err
 }
@@ -113,9 +116,7 @@ func (s *Server) Stream(stream Game_StreamServer) error {
 	md, ok := metadata.FromIncomingContext(stream.Context())
 	if !ok {
 
-		log.Println("rpcserver stream ctx err")
-
-		return errors.New("stream ctx error")
+		return errors.New("rpc.Stream: stream ctx error")
 	}
 
 	var session *Session
@@ -142,9 +143,10 @@ func (s *Server) Stream(stream Game_StreamServer) error {
 			sname := in.ServiceName[:dot]
 			mname := in.ServiceName[dot+1:]
 			serv, ok := s.serviceMap[sname]
+
 			if !ok {
 
-				return errors.New("service not found")
+				return errors.New(fmt.Sprintf("rpcserver(%s): service(%s) not found", s.name, sname))
 			}
 
 			if in.Session == nil {
@@ -155,15 +157,12 @@ func (s *Server) Stream(stream Game_StreamServer) error {
 			resp, err := serv.handle(mname, in)
 			if err != nil {
 
-				log.Printf("rpcserver handle %v", err)
-				return err
+				return errors.New(fmt.Sprintf("rpcserver(%s) handle %v", s.name, err))
 			}
 
 			if err := stream.Send(resp); err != nil {
 
-				log.Printf("rpcserver streamsend, err=%s", err.Error())
-
-				return err
+				return errors.New(fmt.Sprintf("rpcserver(%s) streamsend, err=%v", s.name, err))
 			}
 
 		case <-quit:
@@ -174,7 +173,7 @@ func (s *Server) Stream(stream Game_StreamServer) error {
 }
 
 // RegisterService 注册一个服务
-func RegisterService(v interface{}) error {
+func RegisterService(v interface{}) {
 
 	server.mux.Lock()
 	defer server.mux.Unlock()
@@ -190,50 +189,41 @@ func RegisterService(v interface{}) error {
 	sname := reflect.Indirect(s.rcvr).Type().Name()
 	if sname == "" {
 
-		s := "rpc.Register: no service name for type " + s.typ.String()
-		log.Println(s)
-
-		return errors.New(s)
+		panic("rpc.Register: no service name for type " + s.typ.String())
 	}
 
 	if _, present := server.serviceMap[sname]; present {
 
-		return errors.New("rpc: service already defined: " + sname)
+		panic("rpc.Register: service already defined " + sname)
 	}
 
 	s.name = sname
 	s.method = suitableMethods(s.typ)
 	server.serviceMap[s.name] = s
-
-	return nil
 }
 
 func suitableMethods(typ reflect.Type) map[string]reflect.Method {
-	
+
 	methods := make(map[string]reflect.Method)
 	for m := 0; m < typ.NumMethod(); m++ {
-	
+
 		method := typ.Method(m)
 		mtype := method.Type
 		mname := method.Name
 
 		if method.PkgPath != "" {
-		
+
 			continue
 		}
 
-		if mtype.NumOut() != 2 {
+		if mtype.NumOut() != 1 {
 
-			log.Println("method", mname, "has wrong number of outs:", mtype.NumOut())
-			
-			continue
+			panic(fmt.Sprintf("rpc.Register: method %s has wrong number of outs: %d", mname, mtype.NumOut()))
 		}
 
 		if mtype.NumIn() != 3 {
 
-			log.Println("method", mname, "has wrong number of ins:", mtype.NumIn())
-			
-			continue
+			panic(fmt.Sprintf("rpc.Register: method %s has wrong number of ins: %d", mname, mtype.NumIn()))
 		}
 
 		methods[mname] = method
@@ -252,24 +242,16 @@ type service struct {
 //处理客户端发送的数据包
 func (s *service) handle(methodName string, in *GameMsg) (*GameMsg, error) {
 
-	defer gofunc.PrintPanic()
-
 	method, ok := s.method[methodName]
 	if !ok {
 
-		return nil, errors.New("method not found")
+		return nil, errors.New(fmt.Sprintf("rpc.handle: method(%s) not found", methodName))
 	}
 
 	function := method.Func
 	rvs := []reflect.Value{s.rcvr, reflect.ValueOf(in.Msg), reflect.ValueOf(in.Session)}
 	ret := function.Call(rvs)
 	resp := ret[0].Bytes()
-	errInter := ret[1].Interface()
-
-	if errInter != nil {
-
-		return nil, errInter.(error)
-	}
 
 	return &GameMsg{ServiceName: in.ServiceName, Msg: resp}, nil
 }
