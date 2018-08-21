@@ -11,6 +11,7 @@ import (
 	"github.com/laonsx/gamelib/gofunc"
 	"github.com/laonsx/gamelib/rpc"
 	"github.com/laonsx/gamelib/server"
+	"github.com/laonsx/gamelib/timer"
 	"github.com/sirupsen/logrus"
 )
 
@@ -21,10 +22,10 @@ func init() {
 	agentService = new(agentServiceStruct)
 	agentService.agents = make(map[uint64]*agent)
 
-	//todo
-	//timer.AfterFunc(time.Duration(300)*time.Second, 0, func(n int) {
-	//	agentService.clear()
-	//})
+	timer.AfterFunc(time.Duration(300)*time.Second, 0, func(n int) {
+
+		agentService.clear()
+	})
 }
 
 type agentServiceStruct struct {
