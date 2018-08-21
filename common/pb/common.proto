@@ -2,9 +2,17 @@ syntax = "proto3";
 
 package pb;
 
-//登录认证 协议号3  重连 5
+//gate服务 登录认证 协议号3  重连 5
 message GateRequest {
-	string secret = 1;
-	uint64 uid = 2;
-	string chanId = 3;
+	string secret = 1;//密钥
+	uint64 uid = 2;//用户uid
+	string chanId = 3;//通道
+}
+
+//center服务 rpc接口
+message CenterRequest{
+    repeated uint64 uid = 1;//用户uid
+}
+message CenterResponse{
+    repeated bool online = 1;//是否在线
 }
