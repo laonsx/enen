@@ -217,6 +217,7 @@ func (a *agent) input(pnum uint16, data []byte) error {
 
 	a.packetCount++
 
+	//todo 只保留getname函数，且移除node
 	//通过协议号获取服务名
 	_, serviceName, err := rpc.GetName(pnum)
 	if err != nil {
@@ -400,6 +401,7 @@ func rpcStream(userId uint64) (stream rpc.Game_StreamClient, err error) {
 	md := make(map[string]string)
 	md["uid"] = strconv.FormatUint(userId, 10)
 	md["name"] = "agent"
+	//todo gate1->game1 replace m->t
 	stream, err = rpc.Stream("game", md)
 
 	return
