@@ -23,7 +23,7 @@ func (gateService *GateService) Login(data []byte, session *rpc.Session) []byte 
 	err := proto.Unmarshal(data, req)
 	if err != nil {
 
-		//return nil
+		return pb.Error(pb.PBUNMARSHAL, "GateService.Login", err)
 	}
 
 	uid := req.GetUid()
@@ -32,7 +32,7 @@ func (gateService *GateService) Login(data []byte, session *rpc.Session) []byte 
 
 	agentService.newAgent(uid, req.GetSecret())
 
-	return nil
+	return pb.Response(nil)
 }
 
 //Kick 踢下线
@@ -42,7 +42,7 @@ func (gateService *GateService) Kick(data []byte, session *rpc.Session) []byte {
 	err := proto.Unmarshal(data, req)
 	if err != nil {
 
-		//return nil
+		return pb.Error(pb.PBUNMARSHAL, "GateService.Kick", err)
 	}
 
 	if agent := agentService.getAgent(req.GetUid()); agent != nil {
@@ -50,7 +50,7 @@ func (gateService *GateService) Kick(data []byte, session *rpc.Session) []byte {
 		agent.kick()
 	}
 
-	return nil
+	return pb.Response(nil)
 }
 
 //ReloadGameServiceConf 重新加载协议号对应的游戏服务配置
@@ -58,5 +58,5 @@ func (gateService *GateService) ReloadGameServiceConf(data []byte, session *rpc.
 
 	reloadGameServiceConf()
 
-	return nil
+	return pb.Response(nil)
 }
