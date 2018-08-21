@@ -62,6 +62,7 @@
   name = "github.com/laonsx/gamelib"
   packages = [
     "codec",
+    "crypt",
     "g",
     "gofunc",
     "log",
@@ -70,7 +71,7 @@
     "server",
     "server/ws"
   ]
-  revision = "abf4eb77b79939b38c2007f6dd768786174f0f53"
+  revision = "c381d5b285d81348e423c427e35ba404ecdb3796"
 
 [[projects]]
   name = "github.com/magiconair/properties"
@@ -245,6 +246,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ce38df6d53057d14e41ac5b461aded28795b6a738bf388ae861b727dd47dbc2f"
+  inputs-digest = "0674a859d84ed3d64fe112ad943e57e5225b7c9d91303747ee78a2de5b909812"
   solver-name = "gps-cdcl"
   solver-version = 1
