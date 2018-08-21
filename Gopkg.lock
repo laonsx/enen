@@ -25,8 +25,8 @@
     "ptypes/duration",
     "ptypes/timestamp"
   ]
-  revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
-  version = "v1.1.0"
+  revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
+  version = "v1.2.0"
 
 [[projects]]
   name = "github.com/gorilla/websocket"
@@ -66,6 +66,7 @@
     "g",
     "gofunc",
     "log",
+    "pools",
     "redis",
     "rpc",
     "server",
@@ -152,7 +153,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "aabede6cba87e37f413b3e60ebfc214f8eeca1b0"
+  revision = "614d502a4dac94afa3a6ce146bd1736da82514c6"
 
 [[projects]]
   branch = "master"
@@ -166,7 +167,7 @@
     "internal/timeseries",
     "trace"
   ]
-  revision = "aaf60122140d3fcf75376d319f0554393160eb50"
+  revision = "922f4815f713f213882e8ef45e0d315b164d705c"
 
 [[projects]]
   branch = "master"
@@ -175,7 +176,7 @@
     "unix",
     "windows"
   ]
-  revision = "1c9583448a9c3aa0f9a6a5241bf73c0bd8aafded"
+  revision = "4ea2f632f6e912459fe60b26b1749377f0d889d5"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -202,7 +203,7 @@
   branch = "master"
   name = "google.golang.org/genproto"
   packages = ["googleapis/rpc/status"]
-  revision = "d0a8f471bba2dbb160885b0000d814ee5d559bad"
+  revision = "c66870c02cf823ceb633bcd05be3c7cda29976f4"
 
 [[projects]]
   name = "google.golang.org/grpc"
@@ -246,6 +247,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0674a859d84ed3d64fe112ad943e57e5225b7c9d91303747ee78a2de5b909812"
+  inputs-digest = "a8f50e0fb53180395d67639271336ec2b5ba1f9c86f1d2ba50230960906d0738"
   solver-name = "gps-cdcl"
   solver-version = 1
