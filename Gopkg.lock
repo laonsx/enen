@@ -70,9 +70,10 @@
     "redis",
     "rpc",
     "server",
-    "server/ws"
+    "server/ws",
+    "timer"
   ]
-  revision = "c381d5b285d81348e423c427e35ba404ecdb3796"
+  revision = "e8d36065152e7d66889263a900a0bb8ff8449cba"
 
 [[projects]]
   name = "github.com/magiconair/properties"
@@ -247,6 +248,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a8f50e0fb53180395d67639271336ec2b5ba1f9c86f1d2ba50230960906d0738"
+  inputs-digest = "5f7bc4f702376c15b0ecb96de0b8ac44193b362410da598707df57d077c26011"
   solver-name = "gps-cdcl"
   solver-version = 1
