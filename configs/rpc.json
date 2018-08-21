@@ -1,6 +1,8 @@
 {
   "node":[
-    {"name":"game", "addr":"127.0.0.1:6101"}
+    {"name":"game", "addr":"127.0.0.1:9004"},
+    {"name":"gate", "addr":"127.0.0.1:9003"},
+    {"name":"center", "addr":"127.0.0.1:9002"}
   ],
   "method":[
     {"id":"1001", "name":"TestService.Hello", "nodename":"game"}

@@ -13,7 +13,7 @@
     "log_dir":"./logs/auth.log"
   },
   "center":{
-    "http_addr":"0.0.0.0:7002",
+    "web_socket_addr":"0.0.0.0:8002",
     "rpc_addr":"127.0.0.1:9002",
     "log_dir":"./logs/%s.log"
   },
