@@ -193,7 +193,7 @@ func (center *CenterServer) start(chanMsg chan []byte, conn server.Conn) {
 
 	ret["code"] = 0
 	//todo 返回gate地址
-	ret["addr"] = "0.0.0.0:8003"
+	ret["addr"] = "10.1.16.69:8003"
 	ret["pfuid"] = openId
 	ret["uid"] = userId
 

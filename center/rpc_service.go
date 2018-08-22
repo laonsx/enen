@@ -19,8 +19,8 @@ type CenterService struct{}
 //UserLogout 登出
 func (centerService *CenterService) UserLogout(data []byte, session *rpc.Session) []byte {
 
-	req := &pb.CenterRequest{}
-	err := proto.Unmarshal(data, req)
+	req := pb.CenterRequest{}
+	err := proto.Unmarshal(data, &req)
 	if err != nil {
 
 		return pb.Error(pb.PBUNMARSHAL, "CenterService.UserLogout", err)
@@ -39,8 +39,8 @@ func (centerService *CenterService) UserLogout(data []byte, session *rpc.Session
 //UserOnline 用户上线
 func (centerService *CenterService) UserOnline(data []byte, session *rpc.Session) []byte {
 
-	req := &pb.CenterRequest{}
-	err := proto.Unmarshal(data, req)
+	req := pb.CenterRequest{}
+	err := proto.Unmarshal(data, &req)
 	if err != nil {
 
 		return pb.Error(pb.PBUNMARSHAL, "CenterService.UserOnline", err)
@@ -59,8 +59,8 @@ func (centerService *CenterService) UserOnline(data []byte, session *rpc.Session
 //UserOffline 用户离线
 func (centerService *CenterService) UserOffline(data []byte, session *rpc.Session) []byte {
 
-	req := &pb.CenterRequest{}
-	err := proto.Unmarshal(data, req)
+	req := pb.CenterRequest{}
+	err := proto.Unmarshal(data, &req)
 	if err != nil {
 
 		return pb.Error(pb.PBUNMARSHAL, "CenterService.UserOffline", err)
@@ -79,8 +79,8 @@ func (centerService *CenterService) UserOffline(data []byte, session *rpc.Sessio
 //UserLineStateList 获取在线状态
 func (centerService *CenterService) UserLineStateList(data []byte, session *rpc.Session) []byte {
 
-	req := &pb.CenterRequest{}
-	err := proto.Unmarshal(data, req)
+	req := pb.CenterRequest{}
+	err := proto.Unmarshal(data, &req)
 	if err != nil {
 
 		return pb.Error(pb.PBUNMARSHAL, "CenterService.UserLineStateList", err)
