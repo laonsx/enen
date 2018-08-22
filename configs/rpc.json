@@ -5,6 +5,6 @@
     {"name":"center", "addr":"127.0.0.1:9002"}
   ],
   "method":[
-    {"id":"1001", "name":"TestService.Hello", "nodename":"game"}
+    {"id":"1001", "name":"TestService.Hello"}
   ]
 }
