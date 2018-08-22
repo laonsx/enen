@@ -50,6 +50,10 @@ func init() {
 	// testCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	testCmd.Flags().StringP("func", "f", "", "执行模块")
+	testCmd.Flags().BoolP("debug", "d", true, "调试模式")
+	testCmd.Flags().StringP("robot", "r", "user_1", "机器人设置[id_count]")
 
-	viper.BindPFlag("auth.func", testCmd.Flags().Lookup("func"))
+	viper.BindPFlag("test.func", testCmd.Flags().Lookup("func"))
+	viper.BindPFlag("test.debug", testCmd.Flags().Lookup("debug"))
+	viper.BindPFlag("test.robot", testCmd.Flags().Lookup("robot"))
 }
