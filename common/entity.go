@@ -20,9 +20,8 @@ type (
 	}
 
 	MethodConf struct {
-		Id       string `json:"id"`
-		Name     string `json:"name"`
-		NodeName string `json:"nodename"`
+		Id   string `json:"id"`
+		Name string `json:"name"`
 	}
 )
 

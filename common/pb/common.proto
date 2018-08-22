@@ -10,9 +10,18 @@ message GateRequest {
 }
 
 //center服务 rpc接口
-message CenterRequest{
+message CenterRequest {
     repeated uint64 uid = 1;//用户uid
 }
-message CenterResponse{
+message CenterResponse {
     repeated bool online = 1;//是否在线
+}
+
+//测试接口请求 1001
+message HelloRequest {
+    string req_msg = 1;
+}
+//测试接口返回 1002
+message HelloResponse {
+    string resp_msg = 1;
 }
