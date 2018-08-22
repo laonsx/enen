@@ -56,7 +56,7 @@ func Run() {
 	var methods [][]string
 	for _, v := range rpcConf.Method {
 
-		methods = append(methods, []string{v.Id, v.Name, v.NodeName})
+		methods = append(methods, []string{v.Id, v.Name})
 	}
 
 	var opts []grpc.DialOption
@@ -108,7 +108,7 @@ func reloadGameServiceConf() {
 	var methods [][]string
 	for _, v := range rpcConf.Method {
 
-		methods = append(methods, []string{v.Id, v.Name, v.NodeName})
+		methods = append(methods, []string{v.Id, v.Name})
 	}
 
 	rpc.ReloadMethodConf(methods)

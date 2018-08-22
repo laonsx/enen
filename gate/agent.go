@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -13,11 +14,12 @@ import (
 	"github.com/laonsx/gamelib/server"
 	"github.com/laonsx/gamelib/timer"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 var agentService *agentServiceStruct
 
-func init() {
+func InitAgent() {
 
 	agentService = new(agentServiceStruct)
 	agentService.agents = make(map[uint64]*agent)
@@ -43,7 +45,10 @@ func (as *agentServiceStruct) clear() {
 		}
 	}
 
-	logrus.Infof("agent count=%d", len(as.agents))
+	as.mux.RLock()
+	defer as.mux.RUnlock()
+
+	logrus.Infof("agent count = %d", len(as.agents))
 }
 
 func (as *agentServiceStruct) getAgent(uid uint64) *agent {
@@ -115,8 +120,6 @@ func (as *agentServiceStruct) agentCount() int {
 
 	return len(as.agents)
 }
-
-//todo agent.stream 对不同node支持，map[name]rpc.Game_StreamClient
 
 type agent struct {
 	mux         sync.RWMutex
@@ -219,7 +222,7 @@ func (a *agent) input(pnum uint16, data []byte) error {
 
 	//todo 只保留getname函数，且移除node
 	//通过协议号获取服务名
-	_, serviceName, err := rpc.GetName(pnum)
+	serviceName, err := rpc.GetName(pnum)
 	if err != nil {
 
 		logrus.Errorf("agent input, uid=%d err=%s", a.userId, err.Error())
@@ -401,8 +404,8 @@ func rpcStream(userId uint64) (stream rpc.Game_StreamClient, err error) {
 	md := make(map[string]string)
 	md["uid"] = strconv.FormatUint(userId, 10)
 	md["name"] = "agent"
-	//todo gate1->game1 replace m->t
-	stream, err = rpc.Stream("game", md)
+
+	stream, err = rpc.Stream(strings.Replace(viper.GetString("gate.name"), "t", "m", 1), md)
 
 	return
 }

@@ -19,8 +19,8 @@ type GateService struct{}
 //Login 登录接口 center->gate
 func (gateService *GateService) Login(data []byte, session *rpc.Session) []byte {
 
-	req := &pb.GateRequest{}
-	err := proto.Unmarshal(data, req)
+	req := pb.GateRequest{}
+	err := proto.Unmarshal(data, &req)
 	if err != nil {
 
 		return pb.Error(pb.PBUNMARSHAL, "GateService.Login", err)
@@ -38,8 +38,8 @@ func (gateService *GateService) Login(data []byte, session *rpc.Session) []byte 
 //Kick 踢下线
 func (gateService *GateService) Kick(data []byte, session *rpc.Session) []byte {
 
-	req := &pb.GateRequest{}
-	err := proto.Unmarshal(data, req)
+	req := pb.GateRequest{}
+	err := proto.Unmarshal(data, &req)
 	if err != nil {
 
 		return pb.Error(pb.PBUNMARSHAL, "GateService.Kick", err)

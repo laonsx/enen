@@ -33,6 +33,8 @@ func NewGateServer(addr string, originAllow string) server.GateServer {
 	gateServerHandler = &GateServerHandler{server: wsGateServer}
 	wsGateServer.SetHandler(gateServerHandler)
 
+	InitAgent()
+
 	return wsGateServer
 }
 
