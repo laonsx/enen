@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -33,10 +32,9 @@ func InitClient(cluster map[string]string, services [][]string, opts []grpc.Dial
 
 		pnum, _ := strconv.Atoi(v[0])
 		sname := v[1]
-		node := v[2]
 
 		serviceMap[sname] = uint16(pnum)
-		servicesNumMap[uint16(pnum)] = node + "|" + sname
+		servicesNumMap[uint16(pnum)] = sname
 	}
 	client.servicesMap = serviceMap
 	client.servicesNumMap = servicesNumMap
@@ -55,10 +53,9 @@ func ReloadMethodConf(services [][]string) {
 
 		pnum, _ := strconv.Atoi(v[0])
 		sname := v[1]
-		node := v[2]
 
 		serviceMap[sname] = uint16(pnum)
-		servicesNumMap[uint16(pnum)] = node + "|" + sname
+		servicesNumMap[uint16(pnum)] = sname
 	}
 
 	client.servicesMap = serviceMap
@@ -66,13 +63,11 @@ func ReloadMethodConf(services [][]string) {
 }
 
 // GetName 根据协议号 获取节点名称和服务名
-func GetName(pnum uint16) (nname string, sname string, err error) {
+func GetName(pnum uint16) (sname string, err error) {
 
 	if s, ok := client.servicesNumMap[pnum]; ok {
 
-		arr := strings.Split(s, "|")
-		nname = arr[0]
-		sname = arr[1]
+		sname = s
 	} else {
 
 		err = errors.New(fmt.Sprintf("service not found by pnum(%d)", pnum))
