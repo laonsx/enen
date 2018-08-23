@@ -59,7 +59,6 @@ func (server *Server) Start() {
 
 		log.Printf("websocket(%s) listening on %s", server.name, server.addr)
 
-		http.HandleFunc("/", server.serveWs)
 		http.HandleFunc("/ws", server.serveWs)
 
 		err := http.ListenAndServe(server.addr, nil)
