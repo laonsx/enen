@@ -29,6 +29,7 @@ type Config struct {
 	HttpAddr      string `json:"http_addr"`
 	WebSocketAddr string `json:"web_socket_addr"`
 	RpcAddr       string `json:"rpc_addr"`
+	PprofAddr     string `json:"pprof_addr"`
 	NsqAddr       string `json:"nsq_addr"`
 	NsqTopic      string `json:"nsq_topic"`
 	LogDir        string `json:"log_dir"`

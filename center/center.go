@@ -157,10 +157,10 @@ func (center *CenterServer) start(chanMsg chan []byte, conn server.Conn) {
 	//todo 分配要连接的gate
 
 	//通知gate
-	req := new(pb.GateRequest)
+	req := pb.GateRequest{}
 	req.Secret = secret.String()
 	req.Uid = userId
-	reqData, err := proto.Marshal(req)
+	reqData, err := proto.Marshal(&req)
 	if err != nil {
 
 		logrus.Errorf("call gate marshal err=%s", err.Error())

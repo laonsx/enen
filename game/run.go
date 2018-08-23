@@ -31,6 +31,11 @@ func Run() {
 		panic(fmt.Sprintf("server name(%s) not found", viper.GetString("game.name")))
 	}
 
+	if viper.GetBool("game.debug") {
+
+		gofunc.Pprof(conf.PprofAddr)
+	}
+
 	log.InitLogrus(fmt.Sprintf(conf.LogDir, viper.GetString("game.name")), viper.GetBool("game.debug"))
 
 	//redis
