@@ -6,12 +6,9 @@ import (
 	"github.com/laonsx/gamelib/g"
 )
 
-var timers []*time.Timer
-
 func AfterFunc(delay time.Duration, count int, cb func(n int)) *time.Timer {
 
 	t := time.NewTimer(delay)
-	timers = append(timers, t)
 
 	g.Go(func() {
 

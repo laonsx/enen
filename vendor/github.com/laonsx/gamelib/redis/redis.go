@@ -21,11 +21,6 @@ var (
 type encodeType func(data interface{}) ([]byte, error)
 type decodeType func(data []byte, v interface{}) error
 
-func init() {
-
-	poolRedisHelper = make(map[string][]*Redis)
-}
-
 type Redis struct {
 	rate int
 	rp   *redis.Pool
@@ -50,6 +45,8 @@ func NewRedisConf(name string, host string, port string, rate int) *RedisConf {
 
 func InitRedis(encodefunc encodeType, decodefunc decodeType, conf ...*RedisConf) {
 
+	poolRedisHelper = make(map[string][]*Redis)
+	
 	encode = encodefunc
 	decode = decodefunc
 
