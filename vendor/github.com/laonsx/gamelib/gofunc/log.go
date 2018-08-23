@@ -2,6 +2,8 @@ package gofunc
 
 import (
 	"log"
+	"net/http"
+	_ "net/http/pprof"
 	"runtime"
 )
 
@@ -27,4 +29,12 @@ func PrintPanic() {
 			i++
 		}
 	}
+}
+
+func Pprof(addr string) {
+
+	go func() {
+
+		log.Println(http.ListenAndServe(addr, nil))
+	}()
 }
