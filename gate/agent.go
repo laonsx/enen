@@ -9,6 +9,9 @@ import (
 	"sync"
 	"time"
 
+	"enen/common/pb"
+
+	"github.com/golang/protobuf/proto"
 	"github.com/laonsx/gamelib/gofunc"
 	"github.com/laonsx/gamelib/rpc"
 	"github.com/laonsx/gamelib/server"
@@ -37,7 +40,7 @@ type agentServiceStruct struct {
 
 func (as *agentServiceStruct) clear() {
 
-	for _, a := range as.agents {
+	for _, a := range as.getAllAgents() {
 
 		if a.online == 0 && time.Now().Unix()-a.offlineTime.Unix() > 300 {
 
@@ -45,10 +48,22 @@ func (as *agentServiceStruct) clear() {
 		}
 	}
 
+	logrus.Infof("agent count = %d", as.agentCount())
+}
+
+func (as *agentServiceStruct) getAllAgents() []*agent {
+
 	as.mux.RLock()
 	defer as.mux.RUnlock()
 
-	logrus.Infof("agent count = %d", len(as.agents))
+	var result []*agent
+
+	for _, agent := range as.agents {
+
+		result = append(result, agent)
+	}
+
+	return result
 }
 
 func (as *agentServiceStruct) getAgent(uid uint64) *agent {
@@ -108,7 +123,17 @@ func (as *agentServiceStruct) delAgent(a *agent) {
 
 	a.close()
 
-	//rpc.Call("center", "UserService.Logout", a.userId)
+	req := pb.CenterRequest{}
+	req.Uid = append(req.Uid, a.userId)
+
+	data, err := proto.Marshal(&req)
+	if err != nil {
+
+		logrus.Errorf("agent exiting, uid=%d err=%v", a.userId, err)
+
+		return
+	}
+	rpc.Call("center", "CenterService.UserLogout", data, nil)
 
 	logrus.Infof("agent exiting, uid=%d", a.userId)
 }
@@ -300,6 +325,7 @@ func (a *agent) output(pnum uint16, data []byte) error {
 func (a *agent) close() {
 
 	a.stream.CloseSend()
+	a.stream.Context().Deadline()
 }
 
 func (a *agent) resetStream() error {
@@ -368,7 +394,18 @@ func (a *agent) setOnline() {
 		a.subchans = make(map[string]int)
 	}
 
-	//rpc.Call("center", "UserService.UserOnline", a.userId)
+	req := pb.CenterRequest{}
+	req.Uid = append(req.Uid, a.userId)
+
+	data, err := proto.Marshal(&req)
+	if err != nil {
+
+		logrus.Errorf("agent exiting, uid=%d err=%v", a.userId, err)
+
+		return
+	}
+
+	rpc.Call("center", "CenterService.UserOnline", data, nil)
 }
 
 func (a *agent) setOffline() {
@@ -380,7 +417,18 @@ func (a *agent) setOffline() {
 
 	a.subchans = nil
 
-	//rpc.Call("center", "UserService.UserOffline", a.userId)
+	req := pb.CenterRequest{}
+	req.Uid = append(req.Uid, a.userId)
+
+	data, err := proto.Marshal(&req)
+	if err != nil {
+
+		logrus.Errorf("agent exiting, uid=%d err=%v", a.userId, err)
+
+		return
+	}
+
+	rpc.Call("center", "CenterService.UserOffline", data, nil)
 }
 
 func (a *agent) isOnline() bool {

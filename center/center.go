@@ -85,12 +85,29 @@ func (center *CenterServer) start(chanMsg chan []byte, conn server.Conn) {
 
 	//serverkey
 	privatekey := crypt.Randomkey()
-	serverkey := crypt.DHExchange(privatekey)
+
+	//
+	n := new(big.Int)
+	P := new(big.Int)
+	P.SetString("FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E088A67CC74020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245E485B576625E7EC6F44C42E9A637ED6B0BFF5CB6F406B7EDEE386BFB5A899FA5AE9F24117C4B1FE649286651ECE65381FFFFFFFFFFFFFFFF", 16)
+	G := new(big.Int)
+	G.SetInt64(2)
+	serverkey := n.Exp(G, privatekey, P)
+	//
+
+	//serverkey := crypt.DHExchange(privatekey)
 	conn.AsyncSend([]byte(serverkey.String()))
 
 	exchangekey := new(big.Int)
 	exchangekey.SetString(string(clikey), 10)
-	secret := crypt.DHSecret(privatekey, exchangekey)
+
+	//
+	nn := new(big.Int)
+
+	secret := nn.Exp(exchangekey, privatekey, P)
+	//
+
+	//secret := crypt.DHSecret(privatekey, exchangekey)
 
 	//验证双方密钥正确性
 	bmac := <-chanMsg
