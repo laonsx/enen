@@ -28,7 +28,7 @@ func InitAgent() {
 	agentService = new(agentServiceStruct)
 	agentService.agents = make(map[uint64]*agent)
 
-	timer.AfterFunc(time.Duration(30)*time.Second, 0, func(n int) {
+	timer.AfterFunc(time.Duration(300)*time.Second, 0, func(n int) {
 
 		agentService.clear()
 	})
