@@ -18,6 +18,7 @@ import (
 	"github.com/laonsx/gamelib/timer"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"golang.org/x/net/context"
 )
 
 var agentService *agentServiceStruct
@@ -27,7 +28,7 @@ func InitAgent() {
 	agentService = new(agentServiceStruct)
 	agentService.agents = make(map[uint64]*agent)
 
-	timer.AfterFunc(time.Duration(300)*time.Second, 0, func(n int) {
+	timer.AfterFunc(time.Duration(30)*time.Second, 0, func(n int) {
 
 		agentService.clear()
 	})
@@ -98,13 +99,14 @@ func (as *agentServiceStruct) newAgent(userId uint64, secret string) *agent {
 
 	a.subchans = make(map[string]int)
 
-	stream, err := rpcStream(userId)
+	stream, cancel, err := rpcStream(userId)
 	if err != nil {
 
 		return nil
 	}
 
 	a.stream = stream
+	a.cancel = cancel
 
 	as.mux.Lock()
 	as.agents[userId] = a
@@ -154,10 +156,11 @@ type agent struct {
 	offlineTime time.Time             //离线时间
 	limitTime   time.Time             //发包频率检测时间
 	stream      rpc.Game_StreamClient //游戏服务流
-	packetCount int                   //包计数
-	online      int                   //状态 0=离线 1=在线
-	secret      string                //密钥
-	subchans    map[string]int        //订阅的频道
+	cancel      context.CancelFunc
+	packetCount int            //包计数
+	online      int            //状态 0=离线 1=在线
+	secret      string         //密钥
+	subchans    map[string]int //订阅的频道
 }
 
 func (a *agent) start(conn server.Conn) {
@@ -325,7 +328,7 @@ func (a *agent) output(pnum uint16, data []byte) error {
 func (a *agent) close() {
 
 	a.stream.CloseSend()
-	a.stream.Context().Deadline()
+	a.cancel()
 }
 
 func (a *agent) resetStream() error {
@@ -334,13 +337,14 @@ func (a *agent) resetStream() error {
 
 	time.Sleep(time.Duration(100) * time.Millisecond)
 
-	stream, err := rpcStream(a.userId)
+	stream, cancel, err := rpcStream(a.userId)
 	if err != nil {
 
 		return err
 	}
 
 	a.stream = stream
+	a.cancel = cancel
 
 	logrus.Infof("agent reset stream, uid=%d", a.userId)
 
@@ -447,13 +451,13 @@ func (a *agent) kick() {
 	}
 }
 
-func rpcStream(userId uint64) (stream rpc.Game_StreamClient, err error) {
+func rpcStream(userId uint64) (stream rpc.Game_StreamClient, cancel context.CancelFunc, err error) {
 
 	md := make(map[string]string)
 	md["uid"] = strconv.FormatUint(userId, 10)
 	md["name"] = "agent"
 
-	stream, err = rpc.Stream(strings.Replace(viper.GetString("gate.name"), "t", "m", 1), md)
+	stream, cancel, err = rpc.Stream(strings.Replace(viper.GetString("gate.name"), "t", "m", 1), md)
 
 	return
 }

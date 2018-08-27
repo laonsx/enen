@@ -91,17 +91,18 @@ func GetPNum(service string) (pnum uint16, err error) {
 }
 
 // Stream 获取一个流
-func Stream(node string, md map[string]string) (Game_StreamClient, error) {
+func Stream(node string, md map[string]string) (Game_StreamClient, context.CancelFunc, error) {
 
 	var c GameClient
 
 	c, err := client.newClient(node)
 	if err != nil {
 
-		return nil, err
+		return nil, nil, err
 	}
 
-	var ctx = context.Background()
+	//var ctx = context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
 	if md != nil {
 
 		ctx = metadata.NewOutgoingContext(ctx, metadata.New(md))
@@ -109,7 +110,7 @@ func Stream(node string, md map[string]string) (Game_StreamClient, error) {
 
 	stream, err := c.Stream(ctx)
 
-	return stream, err
+	return stream, cancel, err
 }
 
 //func StreamCall(node string, service string, data []byte, session *Session) ([]byte, error) {
