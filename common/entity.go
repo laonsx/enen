@@ -32,7 +32,7 @@ type Config struct {
 	PprofAddr     string `json:"pprof_addr"`
 	NsqAddr       string `json:"nsq_addr"`
 	NsqTopic      string `json:"nsq_topic"`
-	LogDir        string `json:"log_dir"`
+	Log           string `json:"log"`
 	OriginAllow   string `json:"origin_allow"`
 }
 

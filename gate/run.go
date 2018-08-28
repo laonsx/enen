@@ -35,7 +35,7 @@ func Run() {
 		gofunc.Pprof(serverConf.PprofAddr)
 	}
 
-	log.InitLogrus(fmt.Sprintf(serverConf.LogDir, viper.GetString("gate.name")), viper.GetBool("gate.debug"))
+	log.InitLogrus(serverConf.Log, viper.GetBool("gate.debug"))
 
 	//redis
 	var redisConf []*redis.RedisConf

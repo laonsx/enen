@@ -35,7 +35,7 @@ func Run() {
 		gofunc.Pprof(serverConf.PprofAddr)
 	}
 
-	log.InitLogrus(fmt.Sprintf(serverConf.LogDir, viper.GetString("center.name")), viper.GetBool("center.debug"))
+	log.InitLogrus(serverConf.Log, viper.GetBool("center.debug"))
 
 	//rpc客户端
 	rpcConf := new(common.RpcConf)

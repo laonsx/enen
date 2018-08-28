@@ -5,33 +5,33 @@
     "rpc_addr":"",
     "nsq_addr":"",
     "nsq_topic":"",
-    "log_dir":"",
+    "log":"",
     "origin_allow":""
   },
   "auth":{
     "http_addr":"0.0.0.0:7001",
     "pprof_addr":"127.0.0.1:6001",
-    "log_dir":"./logs/auth.log"
+    "log":"./logs/auth.log"
   },
   "center":{
     "web_socket_addr":"0.0.0.0:8002",
     "rpc_addr":"127.0.0.1:9002",
     "pprof_addr":"127.0.0.1:6002",
-    "log_dir":"./logs/%s.log"
+    "log":"./logs/center.log"
   },
   "gate":{
     "web_socket_addr":"0.0.0.0:8003",
     "rpc_addr":"127.0.0.1:9003",
     "pprof_addr":"127.0.0.1:6003",
-    "log_dir":"./logs/%s.log"
+    "log":"./logs/gate.log"
   },
   "game":{
     "rpc_addr":"127.0.0.1:9004",
     "pprof_addr":"127.0.0.1:6004",
-    "log_dir":"./logs/%s.log"
+    "log":"./logs/game.log"
   },
   "gmt":{
     "http_addr":"0.0.0.0:7005",
-    "log_dir":"./logs/%s.log"
+    "log":"./logs/gmt.log"
   }
 }
