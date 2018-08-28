@@ -73,7 +73,7 @@
     "server/ws",
     "timer"
   ]
-  revision = "016da0b8f4410e7e0cd0eecbfd3d305bf5b5c134"
+  revision = "f94fe6858ba7bc6a5735b794c6ea446a28ce15bc"
 
 [[projects]]
   name = "github.com/magiconair/properties"

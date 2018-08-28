@@ -8,7 +8,7 @@ import (
 
 func InitLogrus(path string, debug bool) {
 
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0666)
+	file, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
 	if err == nil {
 
 		logrus.SetOutput(file)
