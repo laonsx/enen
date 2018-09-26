@@ -23,7 +23,7 @@ func initGateManager() {
 		gates: make(map[string]*GateInfo),
 	}
 
-	timer.AfterFunc(time.Duration(10)*time.Second, 0, func(n int) {
+	timer.AfterFunc(time.Duration(300)*time.Second, 0, func(n int) {
 
 		logrus.Infof("gateInfo => %v", GateManager.getGateWeights())
 	})

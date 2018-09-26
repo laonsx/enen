@@ -37,9 +37,9 @@ func loggingCenter() {
 		return
 	}
 
-	timer.AfterFunc(time.Second*3, 0, func(n int) {
+	timer.AfterFunc(time.Duration(3)*time.Second, 0, func(n int) {
 
-		_, err := rpc.Call(serverConf.CenterNodeName, "CenterService.GateLogging", data, nil)
+		_, err := rpc.StreamCall(serverConf.CenterNodeName, "CenterService.GateLogging", data, nil)
 
 		if err != nil {
 
@@ -67,7 +67,7 @@ func finishLoggingCenter() {
 		return
 	}
 
-	_, err = rpc.Call(serverConf.CenterNodeName, "CenterService.GateLogging", data, nil)
+	_, err = rpc.StreamCall(serverConf.CenterNodeName, "CenterService.GateLogging", data, nil)
 	if err != nil {
 
 		log.Println("LoggingCenterHandle finish Call err", err)
