@@ -1,7 +1,9 @@
 {
   "node":[
     {"name":"game", "addr":"127.0.0.1:9004"},
+    {"name":"game1", "addr":"127.0.0.1:9014"},
     {"name":"gate", "addr":"127.0.0.1:9003"},
+    {"name":"gate1", "addr":"127.0.0.1:9013"},
     {"name":"center", "addr":"127.0.0.1:9002"}
   ],
   "method":[

@@ -24,7 +24,8 @@ func Run() {
 	serverConfs := make(common.ServiceConf)
 	gofunc.LoadJsonConf(gofunc.CONFIGS, "server", &serverConfs)
 
-	serverConf, ok := serverConfs[viper.GetString("gate.name")]
+	var ok bool
+	serverConf, ok = serverConfs[viper.GetString("gate.name")]
 	if !ok {
 
 		panic(fmt.Sprintf("server name(%s) not found", viper.GetString("game.name")))
@@ -85,8 +86,11 @@ func Run() {
 
 	go gs.Start()
 
+	go loggingCenter()
+
 	defer func() {
 
+		finishLoggingCenter()
 		gs.Close()
 		rpcServer.Close()
 		g.Close()

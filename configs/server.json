@@ -23,12 +23,29 @@
     "web_socket_addr":"0.0.0.0:8003",
     "rpc_addr":"127.0.0.1:9003",
     "pprof_addr":"127.0.0.1:6003",
-    "log":"./logs/gate.log"
+    "log":"./logs/gate.log",
+    "weight":100,
+    "game_node_name":"game",
+    "center_node_name":"center"
+  },
+  "gate1":{
+    "web_socket_addr":"0.0.0.0:8013",
+    "rpc_addr":"127.0.0.1:9013",
+    "pprof_addr":"127.0.0.1:6013",
+    "log":"./logs/gate1.log",
+    "weight":100,
+    "game_node_name":"game1",
+    "center_node_name":"center"
   },
   "game":{
     "rpc_addr":"127.0.0.1:9004",
     "pprof_addr":"127.0.0.1:6004",
     "log":"./logs/game.log"
+  },
+  "game1":{
+    "rpc_addr":"127.0.0.1:9014",
+    "pprof_addr":"127.0.0.1:6014",
+    "log":"./logs/game1.log"
   },
   "gmt":{
     "http_addr":"0.0.0.0:7005",

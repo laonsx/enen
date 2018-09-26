@@ -5,7 +5,6 @@ import (
 	"errors"
 	"io"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -17,7 +16,6 @@ import (
 	"github.com/laonsx/gamelib/server"
 	"github.com/laonsx/gamelib/timer"
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"golang.org/x/net/context"
 )
 
@@ -409,7 +407,7 @@ func (a *agent) setOnline() {
 		return
 	}
 
-	rpc.Call("center", "CenterService.UserOnline", data, nil)
+	rpc.Call(serverConf.CenterNodeName, "CenterService.UserOnline", data, nil)
 }
 
 func (a *agent) setOffline() {
@@ -432,7 +430,7 @@ func (a *agent) setOffline() {
 		return
 	}
 
-	rpc.Call("center", "CenterService.UserOffline", data, nil)
+	rpc.Call(serverConf.CenterNodeName, "CenterService.UserOffline", data, nil)
 }
 
 func (a *agent) isOnline() bool {
@@ -457,7 +455,8 @@ func rpcStream(userId uint64) (stream rpc.Game_StreamClient, cancel context.Canc
 	md["uid"] = strconv.FormatUint(userId, 10)
 	md["name"] = "agent"
 
-	stream, cancel, err = rpc.Stream(strings.Replace(viper.GetString("gate.name"), "t", "m", 1), md)
+	//stream, cancel, err = rpc.Stream(strings.Replace(viper.GetString("gate.name"), "t", "m", 1), md)
+	stream, cancel, err = rpc.Stream(serverConf.GameNodeName, md)
 
 	return
 }

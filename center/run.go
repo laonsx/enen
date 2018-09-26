@@ -37,6 +37,8 @@ func Run() {
 
 	log.InitLogrus(serverConf.Log, viper.GetBool("center.debug"))
 
+	initGateManager()
+
 	//rpc客户端
 	rpcConf := new(common.RpcConf)
 	gofunc.LoadJsonConf(gofunc.CONFIGS, "rpc", rpcConf)

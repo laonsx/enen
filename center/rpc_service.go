@@ -90,3 +90,18 @@ func (centerService *CenterService) UserLineStateList(data []byte, session *rpc.
 
 	return pb.Response(&pb.CenterResponse{Online: reply})
 }
+
+//GateLogging 网关服务注册
+func (centerService *CenterService) GateLogging(data []byte, session *rpc.Session) []byte {
+
+	req := pb.CenterRequest{}
+	err := proto.Unmarshal(data, &req)
+	if err != nil {
+
+		return pb.Error(pb.PBUNMARSHAL, "CenterService.GateLogging", err)
+	}
+
+	GateManager.refreshGateInfo(req.Gate)
+
+	return pb.Response(nil)
+}

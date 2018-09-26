@@ -171,8 +171,6 @@ func (center *CenterServer) start(chanMsg chan []byte, conn server.Conn) {
 
 	logrus.Infof("login token=%s pf=%s", token, pf)
 
-	//todo 分配要连接的gate
-
 	//通知gate
 	req := pb.GateRequest{}
 	req.Secret = secret.String()
@@ -188,7 +186,9 @@ func (center *CenterServer) start(chanMsg chan []byte, conn server.Conn) {
 		return
 	}
 
-	_, err = rpc.Call("gate", "GateService.Login", reqData, nil)
+	gateInfo := GateManager.getRandGateInfo()
+
+	_, err = rpc.Call(gateInfo.name, "GateService.Login", reqData, nil)
 	if err != nil {
 
 		logrus.Errorf("call gate err=%s", err.Error())
@@ -203,14 +203,14 @@ func (center *CenterServer) start(chanMsg chan []byte, conn server.Conn) {
 	user.ip = conn.RemoteAddr().String()
 	user.secret = secret.String()
 	user.uid = userId
+	user.gate = gateInfo.name
 
 	center.mux.Lock()
 	center.users[user.uid] = user
 	center.mux.Unlock()
 
 	ret["code"] = 0
-	//todo 返回gate地址
-	ret["addr"] = "10.1.16.69:8003"
+	ret["addr"] = gateInfo.addr
 	ret["pfuid"] = openId
 	ret["uid"] = userId
 
@@ -223,7 +223,6 @@ func (center *CenterServer) delUser(uid uint64) {
 	defer center.mux.Unlock()
 
 	delete(center.users, uid)
-	//todo gate 执行 logout
 }
 
 func (center *CenterServer) setOnline(uid uint64) error {
@@ -328,5 +327,6 @@ var idPool = pools.NewIdPool(10001)
 func getUserId(openid string, pf string) (uint64, error) {
 
 	//todo getUserid
+
 	return uint64(idPool.Get()), nil
 }
