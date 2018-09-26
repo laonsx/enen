@@ -2,20 +2,39 @@ syntax = "proto3";
 
 package pb;
 
+//********************gate********************
+
 //gate服务 登录认证 协议号3  重连 5
 message GateRequest {
-	string secret = 1;//密钥
-	uint64 uid = 2;//用户uid
-	string chanId = 3;//通道
+	string secret = 1; // 密钥
+	uint64 uid = 2; // 用户uid
+	string chanId = 3; // 通道
 }
+
+//********************center********************
 
 //center服务 rpc接口
 message CenterRequest {
-    repeated uint64 uid = 1;//用户uid
+    repeated uint64 uid = 1; // 用户uid
+    GateInfo gate = 2; // 网关信息
 }
 message CenterResponse {
-    repeated bool online = 1;//是否在线
+    repeated bool online = 1; // 是否在线
 }
+//网关信息
+message GateInfo {
+    string addr = 1; // 地址
+    int32 weight = 2; // 权重
+    GateState state = 3; // 状态
+    string name = 4; // 名字
+}
+enum GateState{
+    Online = 0;
+    Offline = 1;
+    Close = 2;
+}
+
+//********************game********************
 
 //测试接口请求 1001
 message HelloRequest {

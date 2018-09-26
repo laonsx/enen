@@ -26,14 +26,17 @@ type (
 )
 
 type Config struct {
-	HttpAddr      string `json:"http_addr"`
-	WebSocketAddr string `json:"web_socket_addr"`
-	RpcAddr       string `json:"rpc_addr"`
-	PprofAddr     string `json:"pprof_addr"`
-	NsqAddr       string `json:"nsq_addr"`
-	NsqTopic      string `json:"nsq_topic"`
-	Log           string `json:"log"`
-	OriginAllow   string `json:"origin_allow"`
+	HttpAddr       string `json:"http_addr"`
+	WebSocketAddr  string `json:"web_socket_addr"`
+	RpcAddr        string `json:"rpc_addr"`
+	PprofAddr      string `json:"pprof_addr"`
+	NsqAddr        string `json:"nsq_addr"`
+	NsqTopic       string `json:"nsq_topic"`
+	Log            string `json:"log"`
+	OriginAllow    string `json:"origin_allow"`
+	Weight         int32  `json:"weight"`
+	GameNodeName   string `json:"game_node_name"`
+	CenterNodeName string `json:"center_node_name"`
 }
 
 type ServiceConf map[string]*Config
