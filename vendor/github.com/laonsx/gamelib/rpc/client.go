@@ -3,6 +3,7 @@ package rpc
 import (
 	"errors"
 	"fmt"
+	"io"
 	"strconv"
 	"sync"
 	"time"
@@ -15,7 +16,9 @@ import (
 var (
 	callTimeout = 5 * time.Second
 	client      *Client
-	//streamClient = make(map[string]Game_StreamClient)
+
+	mux                sync.RWMutex
+	streamClientCaches = make(map[string]*StreamClientCache)
 )
 
 // InitClient 初始化客户端
@@ -113,34 +116,52 @@ func Stream(node string, md map[string]string) (Game_StreamClient, context.Cance
 	return stream, cancel, err
 }
 
-//func StreamCall(node string, service string, data []byte, session *Session) ([]byte, error) {
-//
-//	stream, ok := streamClient[node]
-//	if !ok {
-//
-//		stream, err := Stream(node, nil)
-//		if err != nil {
-//
-//			return nil, err
-//		}
-//
-//		streamClient[node] = stream
-//	}
-//
-//	err := stream.Send(&GameMsg{ServiceName: service, Msg: data, Session: session})
-//	if err != nil {
-//
-//		return nil, err
-//	}
-//
-//	ret, err := stream.Recv()
-//	if err != nil {
-//
-//		return nil, err
-//	}
-//
-//	return ret.Msg, err
-//}
+func StreamCall(node string, service string, data []byte, session *Session) ([]byte, error) {
+
+	mux.RLock()
+	streamCache, ok := streamClientCaches[node]
+	mux.RUnlock()
+
+	var err error
+
+	if !ok || streamCache.stream == nil {
+
+		streamCache = &StreamClientCache{}
+		streamCache.stream, streamCache.cancel, err = Stream(node, nil)
+		if err != nil {
+
+			return nil, err
+		}
+
+		mux.Lock()
+		streamClientCaches[node] = streamCache
+		mux.Unlock()
+	}
+
+	err = streamCache.stream.Send(&GameMsg{ServiceName: service, Msg: data, Session: session})
+	if err == io.EOF {
+
+		streamCache.stream.CloseSend()
+		streamCache.cancel()
+		streamCache.stream, streamCache.cancel, err = Stream(node, nil)
+		if err == nil {
+
+			err = streamCache.stream.Send(&GameMsg{ServiceName: service, Msg: data, Session: session})
+		}
+	}
+	if err != nil {
+
+		return nil, err
+	}
+
+	ret, err := streamCache.stream.Recv()
+	if err != nil {
+
+		return nil, err
+	}
+
+	return ret.Msg, err
+}
 
 // Call 简单的grpc调用
 func Call(node string, service string, data []byte, session *Session) ([]byte, error) {
@@ -198,4 +219,9 @@ func (c *Client) newClient(node string) (GameClient, error) {
 	}
 
 	return nil, errors.New("node conf not found")
+}
+
+type StreamClientCache struct {
+	stream Game_StreamClient
+	cancel context.CancelFunc
 }
