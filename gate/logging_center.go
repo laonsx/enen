@@ -40,7 +40,6 @@ func loggingCenter() {
 	timer.AfterFunc(time.Duration(3)*time.Second, 0, func(n int) {
 
 		_, err := rpc.StreamCall(serverConf.CenterNodeName, "CenterService.GateLogging", data, nil)
-
 		if err != nil {
 
 			log.Println("LoggingCenterHandle Call err", err)
