@@ -1,4 +1,4 @@
-# enen v0.0.2 -- master(f19751d)
+# enen v0.0.3 -- master(fe471bb)
 a game framework based on gamelib
 
 ## 启动命令(参照configs/server.json配置文件)
