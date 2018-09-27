@@ -1,7 +1,7 @@
 # enen v0.0.2 -- master(f19751d)
 a game framework based on gamelib
 
-## 启动命令(参照config/server.json配置文件)
+## 启动命令(参照configs/server.json配置文件)
 
 - center服务：enen center
 - gate服务：enen gate
