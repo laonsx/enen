@@ -22,6 +22,7 @@ func (MailService *MailService) MailList(data []byte, session *rpc.Session) []by
 
 		return pb.Error(pb.PBUNMARSHAL, "MailService.MailList", err)
 	}
+
 	logrus.WithFields(logrus.Fields{
 		"uid": session.Uid,
 		"req": req,
@@ -40,6 +41,7 @@ func (MailService *MailService) MailDel(data []byte, session *rpc.Session) []byt
 
 		return pb.Error(pb.PBUNMARSHAL, "MailService.MailDel", err)
 	}
+
 	logrus.WithFields(logrus.Fields{
 		"uid": session.Uid,
 		"req": req,

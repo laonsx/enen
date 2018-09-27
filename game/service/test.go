@@ -23,6 +23,7 @@ func (testService *TestService) Hello(data []byte, session *rpc.Session) []byte 
 
 		return pb.Error(pb.PBUNMARSHAL, "TestService.Hello", err)
 	}
+
 	logrus.WithFields(logrus.Fields{
 		"uid": session.Uid,
 		"req": req,
