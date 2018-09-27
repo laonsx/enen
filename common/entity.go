@@ -32,11 +32,12 @@ type Config struct {
 	PprofAddr      string `json:"pprof_addr"`
 	NsqAddr        string `json:"nsq_addr"`
 	NsqTopic       string `json:"nsq_topic"`
-	Log            string `json:"log"`
+	Log            string `json:"log"` // 日志
 	OriginAllow    string `json:"origin_allow"`
-	Weight         int32  `json:"weight"`
-	GameNodeName   string `json:"game_node_name"`
-	CenterNodeName string `json:"center_node_name"`
+	Weight         int32  `json:"weight"`           // gate服务分配权重
+	GameNodeName   string `json:"game_node_name"`   // gate连接game名
+	CenterNodeName string `json:"center_node_name"` // gate注册center名
+	CenterAddr     string `json:"center_addr"`      // test测试center地址
 }
 
 type ServiceConf map[string]*Config

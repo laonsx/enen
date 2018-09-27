@@ -22,6 +22,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var CenterAddr string
+
 func Test() {
 
 	test := viper.GetString("test.robot")
@@ -126,7 +128,7 @@ func login(token string) (string, string, uint64) {
 	logrus.Debugf("connecting to center")
 
 	d := websocket.Dialer{}
-	c, _, err := d.Dial("ws://10.1.16.69:8002/ws", nil)
+	c, _, err := d.Dial(fmt.Sprintf("ws://%s/ws", CenterAddr), nil) //"ws://127.0.0.1:8002/ws", nil)
 	if err != nil {
 
 		logrus.Fatal("dial: ", err)

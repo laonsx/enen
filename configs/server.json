@@ -50,5 +50,8 @@
   "gmt":{
     "http_addr":"0.0.0.0:7005",
     "log":"./logs/gmt.log"
+  },
+  "test":{
+    "center_addr":"0.0.0.0:8002"
   }
 }
