@@ -9,4 +9,8 @@ a game framework based on gamelib
 - gate1服务：enen gate -n=gate1
 - game1服务：enen game -n=game1
 
+## 测试命令
+
+- 10000个机器人同时在线测试命令测试：enen test -f=robot -r=user_10000
+
 ![enenserver1](https://github.com/laonsx/pngs/blob/master/enen_server_1.png)
