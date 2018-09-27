@@ -18,4 +18,4 @@ a game framework based on gamelib
 - enen [服务] -h
 - enen version
 
-![enenserver1](https://github.com/laonsx/pngs/blob/master/enen_server_1.png)
+![Image text](https://github.com/laonsx/pngs/blob/master/enen_server_1.png)
