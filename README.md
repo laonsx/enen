@@ -11,7 +11,7 @@ a game framework based on gamelib
 
 ## 测试命令
 
-- 10000个机器人同时在线测试命令测试：enen test -f=robot -r=user_10000 -d=false
+- 10000个机器人同时在线测试命令：enen test -f=robot -r=user_10000 -d=false
 
 ## 命令帮助
 - enen -h
