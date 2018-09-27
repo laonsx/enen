@@ -1,6 +1,10 @@
 # enen v0.0.3 -- master(fe471bb)
 a game framework based on gamelib
 
+## 源码编译
+
+- make 或者 go build
+
 ## 启动命令(参照configs/server.json配置文件)
 
 - center服务：enen center
