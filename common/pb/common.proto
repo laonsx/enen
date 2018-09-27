@@ -44,3 +44,21 @@ message HelloRequest {
 message HelloResponse {
     string resp_msg = 1;
 }
+
+//获取邮件信息列表请求 1051
+message MailListRequest {
+
+}
+//获取邮件信息列表返回 1052
+message MailListResponse {
+
+}
+
+//删除邮件请求 1053
+message MailDelRequest {
+
+}
+//删除邮件返回 1054
+message MailDelResponse {
+
+}

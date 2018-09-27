@@ -7,6 +7,9 @@
     {"name":"center", "addr":"127.0.0.1:9002"}
   ],
   "method":[
-    {"id":"1001", "name":"TestService.Hello"}
+    {"id":"1001", "name":"TestService.Hello"},
+
+    {"id":"1051", "name":"MailService.MailList"},
+    {"id":"1053", "name":"MailService.MailDel"}
   ]
 }
