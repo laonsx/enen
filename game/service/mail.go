@@ -28,9 +28,9 @@ func (MailService *MailService) MailList(data []byte, session *rpc.Session) []by
 		"req": req,
 	}).Debug("MailService.MailList")
 
-	resp := &pb.MailListResponse{}
+	resp := pb.MailListResponse{}
 
-	return pb.Response(resp)
+	return pb.Response(&resp)
 }
 
 func (MailService *MailService) MailDel(data []byte, session *rpc.Session) []byte {
@@ -47,7 +47,7 @@ func (MailService *MailService) MailDel(data []byte, session *rpc.Session) []byt
 		"req": req,
 	}).Debug("MailService.MailDel")
 
-	resp := &pb.MailDelResponse{}
+	resp := pb.MailDelResponse{}
 
-	return pb.Response(resp)
+	return pb.Response(&resp)
 }

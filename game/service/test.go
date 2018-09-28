@@ -29,8 +29,8 @@ func (testService *TestService) Hello(data []byte, session *rpc.Session) []byte 
 		"req": req,
 	}).Debug("TestService.Hello")
 
-	resp := &pb.HelloResponse{}
+	resp := pb.HelloResponse{}
 	resp.RespMsg = "hello 我是服务端 我们又见面了"
 
-	return pb.Response(resp)
+	return pb.Response(&resp)
 }
