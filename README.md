@@ -8,7 +8,7 @@ a game framework based on gamelib
 - 支持动态扩展
 - 各服务间采用grpc通信
 
-## 源码编译
+## 源码编译（需要golang环境）
 
 - make 或者 go build
 
