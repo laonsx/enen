@@ -455,7 +455,6 @@ func rpcStream(userId uint64) (stream rpc.Game_StreamClient, cancel context.Canc
 	md["uid"] = strconv.FormatUint(userId, 10)
 	md["name"] = "agent"
 
-	//stream, cancel, err = rpc.Stream(strings.Replace(viper.GetString("gate.name"), "t", "m", 1), md)
 	stream, cancel, err = rpc.Stream(serverConf.GameNodeName, md)
 
 	return
