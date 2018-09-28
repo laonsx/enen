@@ -1,6 +1,13 @@
 # enen v0.0.3 -- master(fe471bb)
 a game framework based on gamelib
 
+## 项目介绍
+
+- 支持热更新、热修复操作
+- 支持客户端tcp长连接
+- 支持动态扩展
+- 各服务间采用grpc通信
+
 ## 源码编译
 
 - make 或者 go build
