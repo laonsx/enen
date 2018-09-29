@@ -13,10 +13,10 @@ import (
 	"time"
 
 	"enen/common/pb"
-
 	"github.com/golang/protobuf/proto"
 	"github.com/gorilla/websocket"
 	"github.com/laonsx/gamelib/crypt"
+	"github.com/laonsx/gamelib/gofunc"
 	"github.com/laonsx/gamelib/timer"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -83,7 +83,7 @@ func start(token string) {
 	logrus.Debugf("gate auth finished", uid)
 
 	u := newUser(uid, conn)
-	u.pnum(1001)
+	u.pnum(1)
 
 	//挂机开始
 	timer.AfterFunc(10*time.Second, 0, func(n int) {
@@ -91,36 +91,101 @@ func start(token string) {
 		u.pnum(1)
 	})
 
-	timer.AfterFunc(2*time.Second, 0, func(n int) {
+	//timer.AfterFunc(2*time.Second, 0, func(n int) {
+	//
+	//	req := &pb.HelloRequest{}
+	//	req.ReqMsg = "哈哈。。hello..服务端。。nice to meet you"
+	//	data, err := proto.Marshal(req)
+	//	if err != nil {
+	//
+	//		logrus.Errorf("marshal 1001 err = %v", err)
+	//		return
+	//	}
+	//	u.send(pack(1001, data))
+	//})
 
-		req := &pb.HelloRequest{}
-		req.ReqMsg = "哈哈。。hello..服务端。。nice to meet you"
-		data, err := proto.Marshal(req)
-		if err != nil {
+	go func() {
 
-			logrus.Errorf("marshal 1001 err = %v", err)
+		var index int
+		length := len(reqCmdList)
+
+		if length == 0 {
+
 			return
 		}
-		u.send(pack(1001, data))
-	})
 
+		if order {
+
+			for {
+
+				if length == index {
+
+					index = 0
+				}
+
+				index++
+				cmd := reqCmdList[index]
+
+				data, err := proto.Marshal(cmd.data)
+				if err != nil {
+
+					logrus.Errorf("marshal %d err = %v", cmd.pnum, err)
+
+					continue
+				}
+
+				logrus.Debugf("request[%d] %d => %v", cmd.id, cmd.pnum, cmd.data)
+				u.send(pack(cmd.pnum, data))
+
+				time.Sleep(time.Second)
+			}
+		} else {
+
+			activeCmdInfo := make(map[int]int)
+			for id := range reqCmdList {
+
+				index++
+				activeCmdInfo[index] = id
+			}
+
+			for {
+
+				index = gofunc.RandInt(length)
+				cmd := reqCmdList[activeCmdInfo[index]]
+
+				data, err := proto.Marshal(cmd.data)
+				if err != nil {
+
+					logrus.Errorf("marshal %d err = %v", cmd.pnum, err)
+
+					continue
+				}
+
+				logrus.Debugf("request[%d] %d => %v", cmd.id, cmd.pnum, cmd.data)
+				u.send(pack(cmd.pnum, data))
+
+				time.Sleep(time.Second)
+			}
+		}
+	}()
 }
 
 func (u *user) printInfo(pnum uint16, body []byte) {
 
-	switch pnum {
+	if pnum < 1000 {
 
-	case 1002:
-
-		resp := pb.HelloResponse{}
-		err := proto.Unmarshal(body, &resp)
-		if err != nil {
-
-			logrus.Errorf("unmarshal 1002 err = %v", err)
-		}
-
-		logrus.Debugf("1002 return =>", resp.RespMsg)
+		return
 	}
+
+	resp := respPbList[pnum]
+	err := proto.Unmarshal(body, resp)
+
+	if err != nil {
+
+		logrus.Errorf("unmarshal %d err = %v", pnum, err)
+	}
+
+	logrus.Debugf("response %d => %v", pnum, resp)
 }
 
 func login(token string) (string, string, uint64) {

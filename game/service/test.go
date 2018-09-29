@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	"enen/common/pb"
 
 	"github.com/golang/protobuf/proto"
@@ -30,7 +32,7 @@ func (testService *TestService) Hello(data []byte, session *rpc.Session) []byte 
 	}).Debug("TestService.Hello")
 
 	resp := pb.HelloResponse{}
-	resp.RespMsg = "hello 我是服务端 我们又见面了"
+	resp.RespMsg = fmt.Sprintf("%s too.", req.ReqMsg)
 
 	return pb.Response(&resp)
 }
