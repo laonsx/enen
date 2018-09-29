@@ -26,8 +26,14 @@ a game framework based on gamelib
 - 10000个机器人同时在线测试命令：enen test -f=robot -r=user_10000 -d=false
 
 ## 命令帮助
+
 - enen -h
 - enen [服务] -h
 - enen version
+
+## 项目计划
+
+- 由日志转测试脚本工具
+- gmt服务
 
 ![Image text](https://github.com/laonsx/pngs/blob/master/enen_server_1.png)
