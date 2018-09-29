@@ -6,6 +6,7 @@ a game framework based on gamelib
 - 支持热更新、热修复操作
 - 支持客户端tcp长连接
 - 支持动态扩展
+- 支持功能测试、压力测试
 - 各服务间采用grpc通信
 
 ## 源码编译（需要golang环境）
