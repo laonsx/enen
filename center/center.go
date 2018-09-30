@@ -186,7 +186,19 @@ func (center *CenterServer) start(chanMsg chan []byte, conn server.Conn) {
 		return
 	}
 
-	gateInfo := GateManager.getRandGateInfo()
+	center.mux.Lock()
+	oldUser := center.users[userId]
+	center.mux.Unlock()
+
+	var gateInfo *GateInfo
+
+	if oldUser != nil {
+
+		gateInfo = GateManager.getGateByName(oldUser.gate)
+	} else {
+
+		gateInfo = GateManager.getRandGateInfo()
+	}
 
 	_, err = rpc.Call(gateInfo.name, "GateService.Login", reqData, nil)
 	if err != nil {

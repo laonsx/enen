@@ -133,7 +133,7 @@ func (as *agentServiceStruct) delAgent(a *agent) {
 
 		return
 	}
-	rpc.Call("center", "CenterService.UserLogout", data, nil)
+	rpc.Call(serverConf.CenterNodeName, "CenterService.UserLogout", data, nil)
 
 	logrus.Infof("agent exiting, uid=%d", a.userId)
 }

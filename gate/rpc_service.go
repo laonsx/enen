@@ -26,16 +26,14 @@ func (gateService *GateService) Login(data []byte, session *rpc.Session) []byte 
 		return pb.Error(pb.PBUNMARSHAL, "GateService.Login", err)
 	}
 
-	uid := req.GetUid()
+	agentService.newAgent(req.Uid, req.Secret)
 
-	logrus.Infof("login uid=%d", uid)
-
-	agentService.newAgent(uid, req.GetSecret())
+	logrus.Infof("login uid=%d", req.Uid)
 
 	return pb.Response(nil)
 }
 
-//Kick 踢下线
+//Kick 踢下线 center->gate
 func (gateService *GateService) Kick(data []byte, session *rpc.Session) []byte {
 
 	req := pb.GateRequest{}
@@ -45,7 +43,7 @@ func (gateService *GateService) Kick(data []byte, session *rpc.Session) []byte {
 		return pb.Error(pb.PBUNMARSHAL, "GateService.Kick", err)
 	}
 
-	if agent := agentService.getAgent(req.GetUid()); agent != nil {
+	if agent := agentService.getAgent(req.Uid); agent != nil {
 
 		agent.kick()
 	}
