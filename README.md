@@ -1,4 +1,4 @@
-# enen v0.0.5 -- develop(93c0f8e)
+# enen v0.0.6 -- master(b0eeace)
 a game framework based on gamelib
 
 ## 项目介绍
