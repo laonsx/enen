@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 
+	"enen/gmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -27,7 +28,10 @@ var gmtCmd = &cobra.Command{
 	Short: "管理服务",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		fmt.Println("gmt called")
+
+		gmt.Run()
 	},
 }
 
