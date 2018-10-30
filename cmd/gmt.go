@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // gmtCmd represents the gmt command
@@ -42,4 +43,10 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// gmtCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	gmtCmd.Flags().StringP("name", "n", "gmt", "服务名称")
+	gmtCmd.Flags().BoolP("debug", "d", true, "调试模式")
+
+	viper.BindPFlag("gmt.name", gmtCmd.Flags().Lookup("name"))
+	viper.BindPFlag("gmt.debug", gmtCmd.Flags().Lookup("debug"))
 }
