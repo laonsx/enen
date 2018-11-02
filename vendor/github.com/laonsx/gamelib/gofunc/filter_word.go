@@ -18,27 +18,32 @@ var filterWordMap map[rune]*groupWords
 //返回 （是否有关键词 过滤后的字符串）
 func FilterWord(str string, replace bool) (bool, string) {
 
-	iskw := true
+	var iskw bool
 	rs := []rune(str)
 
 	for i, v := range rs {
 
-		if gw, ok := filterWordMap[v]; ok {
+		gw, ok := filterWordMap[v]
+		if !ok {
 
-			for _, kw := range gw.list {
+			continue
+		}
 
-				if strings.Contains(string(rs[i:]), kw) {
+		for _, kw := range gw.list {
 
-					iskw = false
+			if !strings.Contains(string(rs[i:]), kw) {
 
-					if replace {
+				continue
+			}
 
-						str = strings.Replace(str, kw, "**", 2)
-					} else {
+			iskw = true
 
-						return iskw, str
-					}
-				}
+			if replace {
+
+				str = strings.Replace(str, kw, "**", 2)
+			} else {
+
+				return iskw, str
 			}
 		}
 	}
