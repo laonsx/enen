@@ -7,29 +7,29 @@ import (
 )
 
 type groupWords struct {
-	key  string
+	key  rune
 	list []string
 }
 
-var filterWordMap map[string]*groupWords
+var filterWordMap map[rune]*groupWords
 
 //FilterWord 简单的敏感词检查 过滤
 //参数 str 需要检查的字符串 replace 是否把关键词替换为**
 //返回 （是否有关键词 过滤后的字符串）
 func FilterWord(str string, replace bool) (bool, string) {
 
-	var iskw bool
+	iskw := true
 	rs := []rune(str)
+
 	for i, v := range rs {
 
-		key := string(v)
-		if gw, ok := filterWordMap[key]; ok {
+		if gw, ok := filterWordMap[v]; ok {
 
 			for _, kw := range gw.list {
 
-				a := rs[i:]
-				iskw = strings.Contains(string(a), kw)
-				if iskw {
+				if strings.Contains(string(rs[i:]), kw) {
+
+					iskw = false
 
 					if replace {
 
@@ -49,7 +49,7 @@ func FilterWord(str string, replace bool) (bool, string) {
 //BuildDict 初始化敏感词数据
 func BuildDict(file string) {
 
-	filterWordMap = make(map[string]*groupWords)
+	filterWordMap = make(map[rune]*groupWords)
 
 	strs, err := readFile(file)
 	if err != nil {
@@ -59,7 +59,14 @@ func BuildDict(file string) {
 
 	for _, v := range strs {
 
-		key := SubStr(v, 0, 1)
+		if len(v) <= 0 {
+
+			continue
+		}
+
+		keys := []rune(v)
+		key := keys[0]
+
 		if _, ok := filterWordMap[key]; ok {
 
 			filterWordMap[key].list = append(filterWordMap[key].list, v)
