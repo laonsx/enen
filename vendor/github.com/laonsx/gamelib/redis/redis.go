@@ -46,7 +46,7 @@ func NewRedisConf(name string, host string, port string, rate int) *RedisConf {
 func InitRedis(encodefunc encodeType, decodefunc decodeType, conf ...*RedisConf) {
 
 	poolRedisHelper = make(map[string][]*Redis)
-	
+
 	encode = encodefunc
 	decode = decodefunc
 
@@ -427,6 +427,11 @@ func (r *Redis) HgetallToMap(value interface{}, v interface{}) error {
 func (r *Redis) Hmget(key string, fields []interface{}, v ...interface{}) (err error) {
 
 	fieldsN := len(fields)
+	if len(v) != fieldsN {
+
+		return errors.New("hmget params error")
+	}
+
 	args := make([]interface{}, fieldsN+1)
 
 	args[0] = key
@@ -451,17 +456,10 @@ func (r *Redis) Hmget(key string, fields []interface{}, v ...interface{}) (err e
 
 	if err != nil {
 
-		return
+		return err
 	}
 
-	dataN := len(data)
-
-	if len(v) != fieldsN {
-
-		return errors.New("hmget params error")
-	}
-
-	if fieldsN != dataN {
+	if fieldsN != len(data) {
 
 		return errors.New("hmget error data")
 	}

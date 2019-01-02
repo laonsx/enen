@@ -1,0 +1,10 @@
+/??/??/??/*.log {
+    daily
+    rotate 100
+    copytruncate
+    delaycompress
+    compress
+    notifempty
+    missingok
+    dateext
+}

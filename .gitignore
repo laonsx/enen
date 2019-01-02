@@ -1,4 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 logs/*.log
-enen.exe
+enen*

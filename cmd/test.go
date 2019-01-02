@@ -49,7 +49,7 @@ func init() {
 	// is called directly, e.g.:
 	// testCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
-	testCmd.Flags().StringP("func", "f", "", "执行模块")
+	testCmd.Flags().StringP("func", "f", "robot", "执行模块")
 	testCmd.Flags().BoolP("debug", "d", true, "调试模式")
 	testCmd.Flags().StringP("robot", "r", "user_1", "机器人设置[id_count]")
 
