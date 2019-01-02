@@ -27,7 +27,7 @@ const LOGO = `
 \___/_/ /_/\___/_/ /_/ 
 
 Contact: cn.laonsx@gmail.com
-Version: v0.0.6 -- master(b0eeace)
+Version: v0.0.7 -- master(f34497d)
 `
 
 func main() {
