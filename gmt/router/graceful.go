@@ -50,12 +50,10 @@ func reload(listener net.Listener) error {
 	}
 
 	args := os.Args[1:]
-	if contains(args, "--graceful") {
+	if !contains(args, "-g=true") {
 
-		args = append(args, "--graceful")
+		args = append(args, "-g=true")
 	}
-
-	logrus.Error(args)
 
 	cmd := exec.Command(os.Args[0], args...)
 	cmd.Stdout = os.Stdout
