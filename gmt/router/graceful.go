@@ -50,9 +50,9 @@ func reload(listener net.Listener) error {
 	}
 
 	args := os.Args[1:]
-	if contains(args, "-g=true") {
+	if contains(args, "--graceful") {
 
-		args = append(args, "-g=true")
+		args = append(args, "--graceful")
 	}
 
 	cmd := exec.Command(os.Args[0], args...)
