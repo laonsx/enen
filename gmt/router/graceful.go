@@ -23,28 +23,36 @@ var (
 )
 
 func contains(s []string, e string) bool {
+
 	for _, a := range s {
+
 		if a == e {
+
 			return true
 		}
 	}
+
 	return false
 }
 
 func reload(listener net.Listener) error {
+
 	tl, ok := listener.(*net.TCPListener)
 	if !ok {
+
 		return errors.New("listener is not tcp listener")
 	}
 
 	f, err := tl.File()
 	if err != nil {
+
 		return err
 	}
 
 	args := os.Args[1:]
-	if contains(args, "--graceful") {
-		args = append(args, "--graceful")
+	if contains(args, "-g=true") {
+
+		args = append(args, "-g=true")
 	}
 
 	cmd := exec.Command(os.Args[0], args...)
@@ -52,13 +60,16 @@ func reload(listener net.Listener) error {
 	cmd.Stderr = os.Stderr
 	// put socket FD at the first entry
 	cmd.ExtraFiles = []*os.File{f}
+
 	return cmd.Start()
 }
 
 func signalHandler(server *http.Server, listener net.Listener) {
+
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR2)
 	for {
+
 		sig := <-ch
 
 		logrus.WithFields(logrus.Fields{
@@ -69,7 +80,9 @@ func signalHandler(server *http.Server, listener net.Listener) {
 		// timeout context for shutdown
 		ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
 		switch sig {
+
 		case syscall.SIGINT, syscall.SIGTERM:
+
 			// stop
 			logrus.WithFields(logrus.Fields{
 				"pid":    os.Getpid(),
@@ -83,8 +96,11 @@ func signalHandler(server *http.Server, listener net.Listener) {
 				"pid":    os.Getpid(),
 				"signal": sig,
 			}).Warn("SignalHandler graceful shutdown.")
+
 			return
+
 		case syscall.SIGUSR2:
+
 			// reload
 			logrus.WithFields(logrus.Fields{
 				"pid":    os.Getpid(),
@@ -99,12 +115,14 @@ func signalHandler(server *http.Server, listener net.Listener) {
 					"error":  err,
 				}).Error("SignalHandler graceful failed.")
 			}
+
 			server.Shutdown(ctx)
 
 			logrus.WithFields(logrus.Fields{
 				"pid":    os.Getpid(),
 				"signal": sig,
 			}).Warn("SignalHandler graceful reload.")
+
 			return
 		}
 	}
@@ -120,7 +138,7 @@ func ListenAndServe(addr string, handler http.Handler) {
 	}
 
 	var err error
-	if viper.GetBool("graceful") {
+	if viper.GetBool("gmt.graceful") {
 
 		logrus.WithFields(logrus.Fields{
 			"pid":    os.Getpid(),
@@ -142,11 +160,13 @@ func ListenAndServe(addr string, handler http.Handler) {
 	}
 
 	if err != nil {
+
 		logrus.WithFields(logrus.Fields{
 			"pid":    os.Getpid(),
 			"listen": addr,
 			"error":  err,
 		}).Error("listener error.")
+
 		return
 	}
 
@@ -155,6 +175,7 @@ func ListenAndServe(addr string, handler http.Handler) {
 		err = server.Serve(listener)
 
 		if err != nil {
+
 			logrus.WithFields(logrus.Fields{
 				"pid":    os.Getpid(),
 				"listen": addr,

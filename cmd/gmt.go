@@ -50,7 +50,9 @@ func init() {
 
 	gmtCmd.Flags().StringP("name", "n", "gmt", "服务名称")
 	gmtCmd.Flags().BoolP("debug", "d", true, "调试模式")
+	gmtCmd.Flags().BoolP("graceful", "g", false, "优雅自启动（手动启动勿配置）")
 
 	viper.BindPFlag("gmt.name", gmtCmd.Flags().Lookup("name"))
 	viper.BindPFlag("gmt.debug", gmtCmd.Flags().Lookup("debug"))
+	viper.BindPFlag("gmt.graceful", gmtCmd.Flags().Lookup("graceful"))
 }
