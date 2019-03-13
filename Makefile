@@ -9,3 +9,7 @@ publish :
 
 proto :
 	protoc --go_out=./ ./common/pb/*.proto
+
+deploy-build :
+	cd $${GOPATH}/src/enen && git pull'
+	cd $${GOPATH}/src/enen && go build'
