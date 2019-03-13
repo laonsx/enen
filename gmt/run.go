@@ -30,8 +30,10 @@ func Run() {
 
 	if viper.GetBool("gmt.debug") {
 
-		gin.SetMode(gin.ReleaseMode)
 		gofunc.Pprof(conf.PprofAddr)
+	} else {
+
+		gin.SetMode(gin.ReleaseMode)
 	}
 
 	log.InitLogrus(conf.Log, viper.GetBool("gmt.debug"))
