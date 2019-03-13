@@ -48,7 +48,7 @@
     "log":"./logs/game1.log"
   },
   "gmt":{
-    "http_addr":"0.0.0.0:17005",
+    "http_addr":":17005",
     "log":"./logs/gmt.log"
   },
   "test":{
