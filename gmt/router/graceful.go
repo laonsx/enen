@@ -5,6 +5,7 @@ package router
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net"
 	"net/http"
 	"os"
@@ -159,6 +160,7 @@ func ListenAndServe(addr string, handler http.Handler) {
 		listener, err = net.Listen("tcp4", server.Addr)
 	}
 
+	fmt.Println("addrss", listener.Addr())
 	if err != nil {
 
 		logrus.WithFields(logrus.Fields{
