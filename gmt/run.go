@@ -5,6 +5,7 @@ import (
 
 	"enen/common"
 	"enen/gmt/router"
+	"github.com/gin-gonic/gin"
 	"github.com/laonsx/gamelib/codec"
 	"github.com/laonsx/gamelib/g"
 	"github.com/laonsx/gamelib/gofunc"
@@ -29,6 +30,7 @@ func Run() {
 
 	if viper.GetBool("gmt.debug") {
 
+		gin.SetMode(gin.ReleaseMode)
 		gofunc.Pprof(conf.PprofAddr)
 	}
 
