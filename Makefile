@@ -9,3 +9,6 @@ publish :
 
 proto :
 	protoc --go_out=./ ./common/pb/*.proto
+
+run :
+	./scripts/start.sh
