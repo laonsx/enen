@@ -22,8 +22,6 @@ func Run() {
 	gofunc.LoadJsonConf(gofunc.CONFIGS, "server", &serverConfs)
 
 	conf, ok := serverConfs[viper.GetString("gmt.name")]
-
-	fmt.Println(conf)
 	if !ok {
 
 		panic(fmt.Sprintf("server name(%s) not found", viper.GetString("game.name")))
