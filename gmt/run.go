@@ -15,10 +15,15 @@ import (
 
 func Run() {
 
+	fmt.Println(viper.GetString("gmt.name"))
+	fmt.Println(viper.GetString("gmt.debug"))
+	fmt.Println(viper.GetString("gmt.graceful"))
 	serverConfs := make(common.ServiceConf)
 	gofunc.LoadJsonConf(gofunc.CONFIGS, "server", &serverConfs)
 
 	conf, ok := serverConfs[viper.GetString("gmt.name")]
+
+	fmt.Println(conf)
 	if !ok {
 
 		panic(fmt.Sprintf("server name(%s) not found", viper.GetString("game.name")))
