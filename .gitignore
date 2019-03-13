@@ -2,3 +2,4 @@
 .idea/
 logs/*.log
 enen*
+nohup.out
