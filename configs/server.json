@@ -9,49 +9,49 @@
     "origin_allow":""
   },
   "auth":{
-    "http_addr":"0.0.0.0:7001",
-    "pprof_addr":"127.0.0.1:6001",
+    "http_addr":"0.0.0.0:17001",
+    "pprof_addr":"127.0.0.1:16001",
     "log":"./logs/auth.log"
   },
   "center":{
-    "web_socket_addr":"0.0.0.0:8002",
-    "rpc_addr":"127.0.0.1:9002",
-    "pprof_addr":"127.0.0.1:6002",
+    "web_socket_addr":"0.0.0.0:18002",
+    "rpc_addr":"127.0.0.1:19002",
+    "pprof_addr":"127.0.0.1:16002",
     "log":"./logs/center.log"
   },
   "gate":{
-    "web_socket_addr":"0.0.0.0:8003",
-    "rpc_addr":"127.0.0.1:9003",
-    "pprof_addr":"127.0.0.1:6003",
+    "web_socket_addr":"0.0.0.0:18003",
+    "rpc_addr":"127.0.0.1:19003",
+    "pprof_addr":"127.0.0.1:16003",
     "log":"./logs/gate.log",
     "weight":100,
     "game_node_name":"game",
     "center_node_name":"center"
   },
   "gate1":{
-    "web_socket_addr":"0.0.0.0:8013",
-    "rpc_addr":"127.0.0.1:9013",
-    "pprof_addr":"127.0.0.1:6013",
+    "web_socket_addr":"0.0.0.0:18013",
+    "rpc_addr":"127.0.0.1:19013",
+    "pprof_addr":"127.0.0.1:16013",
     "log":"./logs/gate1.log",
     "weight":100,
     "game_node_name":"game1",
     "center_node_name":"center"
   },
   "game":{
-    "rpc_addr":"127.0.0.1:9004",
-    "pprof_addr":"127.0.0.1:6004",
+    "rpc_addr":"127.0.0.1:19004",
+    "pprof_addr":"127.0.0.1:16004",
     "log":"./logs/game.log"
   },
   "game1":{
-    "rpc_addr":"127.0.0.1:9014",
-    "pprof_addr":"127.0.0.1:6014",
+    "rpc_addr":"127.0.0.1:19014",
+    "pprof_addr":"127.0.0.1:16014",
     "log":"./logs/game1.log"
   },
   "gmt":{
-    "http_addr":"0.0.0.0:7005",
+    "http_addr":"0.0.0.0:17005",
     "log":"./logs/gmt.log"
   },
   "test":{
-    "center_addr":"0.0.0.0:8002"
+    "center_addr":"0.0.0.0:18002"
   }
 }
