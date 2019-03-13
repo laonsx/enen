@@ -5,7 +5,6 @@ package router
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net"
 	"net/http"
 	"os"
@@ -157,9 +156,9 @@ func ListenAndServe(addr string, handler http.Handler) {
 			"listen": addr,
 		}).Info("Listening on a new file descriptor.")
 
-		listener, err = net.Listen("tcp", server.Addr)
+		listener, err = net.Listen("tcp4", server.Addr)
 	}
-	fmt.Println(listener.Addr().String())
+
 	if err != nil {
 
 		logrus.WithFields(logrus.Fields{
