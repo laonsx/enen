@@ -18,11 +18,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var (
-	server   *http.Server
-	listener net.Listener
-)
-
 func contains(s []string, e string) bool {
 
 	for _, a := range s {
@@ -133,12 +128,13 @@ func signalHandler(server *http.Server, listener net.Listener) {
 // reference http://kuangchanglang.com/golang/2017/04/27/golang-graceful-restart
 func ListenAndServe(addr string, handler http.Handler) {
 
-	server = &http.Server{
+	server := &http.Server{
 		Addr:    addr,
 		Handler: handler,
 	}
 
 	var err error
+	var listener net.Listener
 	if viper.GetBool("gmt.graceful") {
 
 		logrus.WithFields(logrus.Fields{
@@ -157,7 +153,7 @@ func ListenAndServe(addr string, handler http.Handler) {
 			"listen": addr,
 		}).Info("Listening on a new file descriptor.")
 
-		listener, err = net.Listen("tcp4", server.Addr)
+		listener, err = net.Listen("tcp", server.Addr)
 	}
 
 	fmt.Println("addrss", listener.Addr())
