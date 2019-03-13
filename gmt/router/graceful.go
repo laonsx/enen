@@ -159,6 +159,7 @@ func ListenAndServe(addr string, handler http.Handler) {
 		}).Info("Listening on a new file descriptor.")
 
 		listener, err = net.Listen("tcp", server.Addr)
+		fmt.Println("...............1111")
 	}
 
 	if err != nil {
@@ -175,7 +176,7 @@ func ListenAndServe(addr string, handler http.Handler) {
 	go func() {
 		// server.Shutdown() stops Serve() immediately, thus server.Serve() should not be in main goroutine
 		err = server.Serve(listener)
-
+		fmt.Println("...........222222")
 		if err != nil {
 
 			logrus.WithFields(logrus.Fields{
