@@ -14,6 +14,8 @@ import (
 
 func Run(httpAddr string) {
 
+	gin.SetMode(gin.ReleaseMode)
+
 	router := gin.New()
 
 	newrelicApp := initNewRelic()
