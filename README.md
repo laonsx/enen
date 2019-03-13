@@ -37,4 +37,3 @@ a game framework based on gamelib
 - gmt服务
 
 ![Image text](https://github.com/laonsx/pngs/blob/master/enen_server_1.png)
-
