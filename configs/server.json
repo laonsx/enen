@@ -49,6 +49,7 @@
   },
   "gmt":{
     "http_addr":"0.0.0.0:17005",
+    "pprof_addr":"127.0.0.1:17005",
     "log":"./logs/gmt.log"
   },
   "test":{

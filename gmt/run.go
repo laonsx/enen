@@ -16,9 +16,6 @@ import (
 
 func Run() {
 
-	fmt.Println(viper.GetString("gmt.name"))
-	fmt.Println(viper.GetString("gmt.debug"))
-	fmt.Println(viper.GetString("gmt.graceful"))
 	serverConfs := make(common.ServiceConf)
 	gofunc.LoadJsonConf(gofunc.CONFIGS, "server", &serverConfs)
 
