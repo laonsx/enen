@@ -21,6 +21,7 @@
   },
   "gate":{
     "web_socket_addr":"0.0.0.0:18003",
+    "gate_addr":"10.1.16.69:18003",
     "rpc_addr":"127.0.0.1:19003",
     "pprof_addr":"127.0.0.1:16003",
     "log":"./logs/gate.log",
@@ -53,6 +54,6 @@
     "log":"./logs/gmt.log"
   },
   "test":{
-    "center_addr":"0.0.0.0:18002"
+    "center_addr":"10.1.16.69:18002"
   }
 }

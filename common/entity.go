@@ -28,6 +28,7 @@ type (
 type Config struct {
 	HttpAddr       string `json:"http_addr"`
 	WebSocketAddr  string `json:"web_socket_addr"`
+	GateAddr       string `json:"gate_addr"` // 客户端请求gate地址
 	RpcAddr        string `json:"rpc_addr"`
 	PprofAddr      string `json:"pprof_addr"`
 	NsqAddr        string `json:"nsq_addr"`

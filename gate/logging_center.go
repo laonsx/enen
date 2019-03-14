@@ -22,7 +22,7 @@ func loggingCenter() {
 
 	req := pb.CenterRequest{}
 	req.Gate = &pb.GateInfo{
-		Addr:   serverConf.WebSocketAddr,
+		Addr:   serverConf.GateAddr,
 		Weight: serverConf.Weight,
 		State:  pb.GateState_Online,
 		Name:   viper.GetString("gate.name"),
