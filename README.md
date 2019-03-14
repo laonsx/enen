@@ -34,6 +34,5 @@ a game framework based on gamelib
 ## 项目计划
 
 - 由日志转测试脚本工具
-- gmt服务
 
 ![Image text](https://github.com/laonsx/pngs/blob/master/enen_server_1.png)
