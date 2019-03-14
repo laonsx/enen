@@ -1,4 +1,4 @@
-# enen v0.0.7 -- master(f34497d)
+# enen v0.0.8 -- master(1b2d9c4)
 a game framework based on gamelib
 
 ## 项目介绍
