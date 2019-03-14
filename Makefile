@@ -11,10 +11,10 @@ proto :
 	protoc --go_out=./ ./common/pb/*.proto
 
 run :
-	nohup ./enen center >> nohup.out &
-	nohup ./enen gate >> nohup.out &
-	nohup ./enen game >> nohup.out &
-	nohup ./enen gmt >> nohup.out &
+	nohup ./enen center &
+	nohup ./enen gate &
+	nohup ./enen game &
+	nohup ./enen gmt &
 
 killall :
 	killall enen
