@@ -18,4 +18,3 @@ run :
 
 killall :
 	killall enen
-
